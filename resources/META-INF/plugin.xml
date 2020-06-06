@@ -1,0 +1,32 @@
+<idea-plugin>
+  <id>dmitriy.molchanov.commit-message-refactorer-plugin</id>
+  <name>CommitMessageRefactorer</name>
+  <version>1.0</version>
+  <vendor email="penopllast@yandex.ru" url="">YourCompany</vendor>
+
+  <description>Помогает выставить актальный префикс для сообщения коммита</description>
+
+  <change-notes><![CDATA[
+      Add change notes here.<br>
+      <em>most HTML tags may be used</em>
+    ]]>
+  </change-notes>
+
+  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/build_number_ranges.html for description -->
+  <idea-version since-build="173.0"/>
+
+  <!-- please see https://www.jetbrains.org/intellij/sdk/docs/basics/getting_started/plugin_compatibility.html
+       on how to target different products -->
+  <depends>com.intellij.modules.platform</depends>
+  <depends>Git4Idea</depends>
+
+  <extensions defaultExtensionNs="com.intellij">
+    <postStartupActivity implementation="main.kotlin.dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
+    <vcs.commitMessageProvider implementation="main.kotlin.dmitriy.molchanov.GitMessageTagCheckerProvider"/>
+  </extensions>
+
+  <actions>
+    <!-- Add your actions here -->
+  </actions>
+
+</idea-plugin>
