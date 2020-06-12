@@ -1,8 +1,9 @@
-package main.kotlin.dmitriy.molchanov
+package main.kotlin.dmitriy.molchanov.ui
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.actionSystem.AnAction
 import com.intellij.openapi.actionSystem.AnActionEvent
+import main.kotlin.dmitriy.molchanov.ui.SettingsDialogWrapper
 
 class CommitPrefixAction : AnAction() {
 
