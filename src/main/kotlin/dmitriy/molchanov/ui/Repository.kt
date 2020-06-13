@@ -1,6 +1,5 @@
 package main.kotlin.dmitriy.molchanov.ui
 
-
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
@@ -26,8 +25,9 @@ object Repository : PersistentStateComponent<Repository.State> {
     }
 
     fun removePrefixes(prefixes: List<Prefix>) {
-        prefixes.map { it.gitRepo }
-                .forEach(state.prefixes::remove)
+        prefixes.forEach {
+            state.prefixes.remove(it.gitRepo)
+        }
     }
 
     private var state = State()
