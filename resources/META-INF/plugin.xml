@@ -7,8 +7,11 @@
     <description>Помогает выставить актальный префикс для сообщения коммита</description>
 
     <change-notes><![CDATA[
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>
+        <b>1.0</b><br>
+        <ul>
+             <li>Подставка префикса</li>
+             <li>Параметризация плагина</li>
+        </ul>
     ]]>
     </change-notes>
 
