@@ -4,6 +4,7 @@ import java.awt.event.MouseEvent
 import java.awt.event.MouseListener
 
 interface MouseClickListener: MouseListener {
+
     override fun mouseReleased(p0: MouseEvent?) = Unit
 
     override fun mouseEntered(p0: MouseEvent?)  = Unit
