@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.SizedIcon
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
+import main.kotlin.dmitriy.molchanov.model.Prefix
 import org.jdesktop.swingx.HorizontalLayout
 import org.jdesktop.swingx.VerticalLayout
 import java.awt.Dimension
@@ -20,11 +21,24 @@ class SettingsDialog(
         private val listener: OnSettingsDialogListener
 
 ) : DialogWrapper(true) {
+    private lateinit var table: JBTable
+
+    private val tableModel: DefaultTableModel
 
     init {
+        val data = Array(0) { arrayOfNulls<String>(2) }
+        val columnNames = arrayOf(REPOSITORY_TITLE, REGEX_RULE)
+        tableModel = DefaultTableModel(data, columnNames)
+
         init()
         title = "Настройки плагина префикса коммитов"
     }
+
+    fun addPrefix(prefix: Prefix) {
+        arrayOf(prefix.gitRepo, prefix.regexPrefix).let(tableModel::addRow)
+    }
+
+    fun addPrefixes(prefixes: List<Prefix>) = prefixes.forEach(::addPrefix)
 
     override fun createCenterPanel(): JComponent? {
         val dialogPanel = JPanel(HorizontalLayout())
@@ -39,15 +53,7 @@ class SettingsDialog(
     }
 
     private fun getTable(): JBTable {
-        val data = Array(2) { arrayOfNulls<String>(2) }
-        val columnNames = arrayOf(REPOSITORY_TITLE, REGEX_RULE)
-        data[0][0] = "test"
-        data[0][1] = "test2"
-        data[1][0] = "123"
-        data[1][1] = "button"
-
-        val model = DefaultTableModel(data, columnNames)
-        val table = JBTable(model)
+        val table = JBTable(tableModel)
         table.preferredScrollableViewportSize = Dimension(500, 200)
         table.fillsViewportHeight = true
         return table

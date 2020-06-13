@@ -23,11 +23,12 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="main.kotlin.dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
         <vcs.commitMessageProvider implementation="main.kotlin.dmitriy.molchanov.GitMessageTagCheckerProvider"/>
-
+        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.ui.Repository"/>
     </extensions>
 
     <actions>
-        <action class="main.kotlin.dmitriy.molchanov.ui.CommitPrefixAction" id="CommitPrefixAction" text="Commit Prefix Plugin">
+        <action class="main.kotlin.dmitriy.molchanov.ui.CommitPrefixAction" id="CommitPrefixAction"
+                text="Commit Prefix Plugin">
             <add-to-group group-id="ToolsMenu"/>
         </action>
     </actions>

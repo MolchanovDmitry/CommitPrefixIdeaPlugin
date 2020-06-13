@@ -6,6 +6,10 @@ import javax.swing.*
 
 class AddRuleDialog : DialogWrapper(true) {
 
+    val gitRepo: String
+        get() = gitRepEdit.text
+    val regexPrefix: String
+        get() = prefixEdit.text
     private val gitRepEdit = JTextField(TEXT_COLUMNS)
     private val prefixEdit = JTextField(TEXT_COLUMNS)
 
