@@ -6,7 +6,6 @@ import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import main.kotlin.dmitriy.molchanov.model.Prefix
-import java.util.concurrent.CopyOnWriteArrayList
 
 @State(name = "PrefixServiceData", storages = [Storage("prefixServiceData.xml")])
 object Repository : PersistentStateComponent<Repository.State> {
@@ -15,17 +14,10 @@ object Repository : PersistentStateComponent<Repository.State> {
         get() = ServiceManager.getService(Repository::class.java)
 
     fun addPrefix(prefix: Prefix) {
-        state.prefixes.add(prefix)
+        state.prefixes[prefix.gitRepo] = prefix.regexPrefix
     }
 
-    fun getPrefixes() = state.prefixes
-
-    override fun toString(): String {
-        return with(state.prefixes) {
-            "size=$size" + "\n${joinToString(separator = "\n")}"
-        }
-    }
-
+    fun getPrefixes() = state.prefixes.map { Prefix(it.key, it.value) }
 
     override fun getState() = state
 
@@ -33,7 +25,12 @@ object Repository : PersistentStateComponent<Repository.State> {
         state = stateLoadedFromPersistence
     }
 
+    fun removePrefixes(prefixes: List<Prefix>) {
+        prefixes.map { it.gitRepo }
+                .forEach(state.prefixes::remove)
+    }
+
     private var state = State()
 
-    data class State(var prefixes: MutableList<Prefix> = CopyOnWriteArrayList())
+    data class State(var prefixes: HashMap<String, String> = HashMap())
 }

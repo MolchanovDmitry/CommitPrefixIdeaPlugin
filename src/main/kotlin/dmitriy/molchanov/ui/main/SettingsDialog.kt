@@ -21,9 +21,9 @@ class SettingsDialog(
         private val listener: OnSettingsDialogListener
 
 ) : DialogWrapper(true) {
-    private lateinit var table: JBTable
 
     private val tableModel: DefaultTableModel
+    private lateinit var table: JBTable
 
     init {
         val data = Array(0) { arrayOfNulls<String>(2) }
@@ -40,10 +40,23 @@ class SettingsDialog(
 
     fun addPrefixes(prefixes: List<Prefix>) = prefixes.forEach(::addPrefix)
 
+    fun clearPrefixes() {
+        for (i in tableModel.rowCount - 1 downTo 0) {
+            tableModel.removeRow(i)
+        }
+    }
+
+    fun getSelectedPrefixes() = table.selectedRows
+            .map {
+                val repo = tableModel.getValueAt(it, 0) as String
+                val regexPrefix = tableModel.getValueAt(it, 1) as String
+                Prefix(repo, regexPrefix)
+            }.toList()
+
     override fun createCenterPanel(): JComponent? {
         val dialogPanel = JPanel(HorizontalLayout())
 
-        val table = getTable()
+        table = getTable()
         val rightPanel = getRightPanel()
         val scrollPane = JBScrollPane(table)
 

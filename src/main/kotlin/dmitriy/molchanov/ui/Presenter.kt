@@ -23,12 +23,14 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
             Prefix(repo, regexPrefix)
                     .also(repository::addPrefix)
                     .also(settingsDialog::addPrefix)
-        } else {
-            println("cancel pressed")
         }
     }
 
     override fun onRemoveClick() {
-        TODO("Not yet implemented")
+        val prefixes = settingsDialog.getSelectedPrefixes()
+        repository.removePrefixes(prefixes)
+        val newPrefixes = repository.getPrefixes()
+        settingsDialog.clearPrefixes()
+        settingsDialog.addPrefixes(newPrefixes)
     }
 }
