@@ -11,10 +11,6 @@ object BoxLayoutUtils {
     fun setGroupAlignmentX(components: Array<JComponent>, alignment: Float) =
             components.forEach { it.alignmentX = alignment }
 
-    /** Выравнивание компонентов по оси Y для группы компонентов */
-    fun setGroupAlignmentY(components: Array<JComponent>, alignment: Float) =
-            components.forEach { it.alignmentY = alignment }
-
     /** Создание панели с вертикальным расположением */
     fun createVerticalPanel() = JPanel().apply {
         maximumSize = Dimension(500, 300)

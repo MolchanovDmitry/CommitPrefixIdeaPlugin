@@ -5,8 +5,9 @@ import javax.swing.*
 
 
 class AddRuleDialog : DialogWrapper(true) {
-    private val gitRepEdit = JTextField(15)
-    private val prefixEdit = JTextField(15)
+
+    private val gitRepEdit = JTextField(TEXT_COLUMNS)
+    private val prefixEdit = JTextField(TEXT_COLUMNS)
 
     init {
         init()
@@ -38,8 +39,9 @@ class AddRuleDialog : DialogWrapper(true) {
         return group
     }
 
-    private companion object{
+    private companion object {
         const val REPOSITORY = "Git repo:"
         const val REGEX_PREFIX = "Regex prefix:"
+        const val TEXT_COLUMNS = 15
     }
 }

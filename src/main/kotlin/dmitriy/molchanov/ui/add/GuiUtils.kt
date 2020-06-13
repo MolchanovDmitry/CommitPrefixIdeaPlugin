@@ -28,15 +28,6 @@ object GuiUtils {
         }
     }
 
-    /** Корректировка размера текстового поля JTextField */
-    fun fixTextFieldSize(field: JTextField) {
-        val size = field.preferredSize
-        //	чтобы текстовое поле по-прежнему могло увеличивать свой размер в длину
-        size.width = field.maximumSize.width
-        //	Определение максимального размера текстового поля
-        field.maximumSize = size
-    }
-
     /** Метод определения позиции максимального элемента массива */
     private fun maximumElementPosition(array: IntArray): Int {
         var maxPos = 0
