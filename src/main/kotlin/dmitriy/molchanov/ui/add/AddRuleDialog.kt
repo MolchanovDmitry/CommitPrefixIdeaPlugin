@@ -1,10 +1,11 @@
 package main.kotlin.dmitriy.molchanov.ui.add
 
 import com.intellij.openapi.ui.DialogWrapper
+import main.kotlin.dmitriy.molchanov.model.Prefix
 import javax.swing.*
 
 
-class AddRuleDialog : DialogWrapper(true) {
+class AddRuleDialog(editablePrefix: Prefix? = null) : DialogWrapper(true) {
 
     val gitRepo: String
         get() = gitRepEdit.text
@@ -16,6 +17,8 @@ class AddRuleDialog : DialogWrapper(true) {
     init {
         init()
         title = "Добавление правила"
+        editablePrefix?.gitRepo?.let(gitRepEdit::setText)
+        editablePrefix?.regexPrefix?.let(prefixEdit::setText)
     }
 
     override fun createCenterPanel(): JComponent {

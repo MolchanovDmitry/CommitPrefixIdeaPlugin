@@ -38,7 +38,9 @@ class SettingsDialog(
         arrayOf(prefix.gitRepo, prefix.regexPrefix).let(tableModel::addRow)
     }
 
-    fun addPrefixes(prefixes: List<Prefix>) = prefixes.forEach(::addPrefix)
+    fun addPrefixes(prefixes: List<Prefix>) {
+        prefixes.forEach(::addPrefix)
+    }
 
     fun clearPrefixes() {
         for (i in tableModel.rowCount - 1 downTo 0) {
@@ -76,8 +78,10 @@ class SettingsDialog(
         val rightPanel = JPanel(VerticalLayout())
         val addImage = addImage(AllIcons.General.Add, listener::onAddClick)
         val remove = addImage(AllIcons.General.Remove, listener::onRemoveClick)
+        val edit = addImage(AllIcons.Actions.Edit, listener::onEditClick)
         rightPanel.add(addImage)
         rightPanel.add(remove)
+        rightPanel.add(edit)
         return rightPanel
     }
 
@@ -93,6 +97,7 @@ class SettingsDialog(
     interface OnSettingsDialogListener {
         fun onAddClick()
         fun onRemoveClick()
+        fun onEditClick()
     }
 
     private companion object {

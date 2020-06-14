@@ -12,25 +12,27 @@ object Repository : PersistentStateComponent<Repository.State> {
     val instance: Repository
         get() = ServiceManager.getService(Repository::class.java)
 
+    private var state = State()
+
     fun addPrefix(prefix: Prefix) {
         state.prefixes[prefix.gitRepo] = prefix.regexPrefix
     }
 
-    fun getPrefixes() = state.prefixes.map { Prefix(it.key, it.value) }
+    fun getPrefixes()  = state.prefixes.map { Prefix(it.key, it.value) }
+
+    fun removePrefix(prefix: Prefix){
+        state.prefixes.remove(prefix.gitRepo)
+    }
+
+    fun removePrefixes(prefixes: List<Prefix>) {
+        prefixes.forEach (::removePrefix)
+    }
 
     override fun getState() = state
 
     override fun loadState(stateLoadedFromPersistence: State) {
         state = stateLoadedFromPersistence
     }
-
-    fun removePrefixes(prefixes: List<Prefix>) {
-        prefixes.forEach {
-            state.prefixes.remove(it.gitRepo)
-        }
-    }
-
-    private var state = State()
 
     data class State(var prefixes: HashMap<String, String> = HashMap())
 }

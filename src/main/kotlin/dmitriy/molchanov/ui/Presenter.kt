@@ -16,21 +16,40 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
     }
 
     override fun onAddClick() {
-        val addRuleDialog = AddRuleDialog()
-        if (addRuleDialog.showAndGet()) {
-            val repo = addRuleDialog.gitRepo
-            val regexPrefix = addRuleDialog.regexPrefix
-            Prefix(repo, regexPrefix)
-                    .also(repository::addPrefix)
-                    .also(settingsDialog::addPrefix)
+        showAddRuleDialog { newPrefix ->
+            repository.addPrefix(newPrefix)
+            settingsDialog.addPrefix(newPrefix)
         }
     }
 
     override fun onRemoveClick() {
         val prefixes = settingsDialog.getSelectedPrefixes()
         repository.removePrefixes(prefixes)
-        val newPrefixes = repository.getPrefixes()
-        settingsDialog.clearPrefixes()
-        settingsDialog.addPrefixes(newPrefixes)
+        updateSettingsDialogTable()
     }
+
+    override fun onEditClick() {
+        val prefix = settingsDialog.getSelectedPrefixes().firstOrNull() ?: return
+        showAddRuleDialog(prefix) { newPrefix ->
+            repository.removePrefix(prefix)
+            repository.addPrefix(newPrefix)
+            updateSettingsDialogTable()
+        }
+    }
+
+    private inline fun showAddRuleDialog(editablePrefix: Prefix? = null, onSuccess: (Prefix) -> Unit) {
+        val addRuleDialog = AddRuleDialog(editablePrefix)
+        if (addRuleDialog.showAndGet()) {
+            val newPrefix = addRuleDialog.getPrefix()
+            onSuccess(newPrefix)
+        }
+    }
+
+    private fun updateSettingsDialogTable() {
+        val prefixes = repository.getPrefixes()
+        settingsDialog.clearPrefixes()
+        settingsDialog.addPrefixes(prefixes)
+    }
+
+    private fun AddRuleDialog.getPrefix() = Prefix(gitRepo, regexPrefix)
 }
