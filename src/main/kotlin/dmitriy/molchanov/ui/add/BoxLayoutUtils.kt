@@ -13,7 +13,7 @@ object BoxLayoutUtils {
 
     /** Создание панели с вертикальным расположением */
     fun createVerticalPanel() = JPanel().apply {
-        maximumSize = Dimension(500, 300)
+        maximumSize = Dimension(600, 300)
         layout = BoxLayout(this, BoxLayout.Y_AXIS)
     }
 

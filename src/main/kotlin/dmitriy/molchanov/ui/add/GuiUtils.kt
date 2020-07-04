@@ -1,7 +1,6 @@
 package main.kotlin.dmitriy.molchanov.ui.add
 
 import javax.swing.JComponent
-import javax.swing.JTextField
 
 
 object GuiUtils {

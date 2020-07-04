@@ -4,9 +4,9 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import main.kotlin.dmitriy.molchanov.model.Prefix
+import main.kotlin.dmitriy.molchanov.model.Rule
 
-@State(name = "PrefixServiceData", storages = [Storage("prefixServiceData.xml")])
+@State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
 object Repository : PersistentStateComponent<Repository.State> {
 
     val instance: Repository
@@ -14,18 +14,21 @@ object Repository : PersistentStateComponent<Repository.State> {
 
     private var state = State()
 
-    fun addPrefix(prefix: Prefix) {
-        state.prefixes[prefix.gitRepo] = prefix.regexPrefix
+    fun addRule(rule: Rule) {
+        removeRule(rule)
+        state.rules.add(rule)
     }
 
-    fun getPrefixes()  = state.prefixes.map { Prefix(it.key, it.value) }
+    fun getRules() = state.rules
 
-    fun removePrefix(prefix: Prefix){
-        state.prefixes.remove(prefix.gitRepo)
+    fun removeRule(rule: Rule) {
+        state.rules
+                .firstOrNull { it.gitRepo == rule.gitRepo }
+                ?.let(state.rules::remove)
     }
 
-    fun removePrefixes(prefixes: List<Prefix>) {
-        prefixes.forEach (::removePrefix)
+    fun removeRule(rules: List<Rule>) {
+        rules.forEach(::removeRule)
     }
 
     override fun getState() = state
@@ -34,5 +37,5 @@ object Repository : PersistentStateComponent<Repository.State> {
         state = stateLoadedFromPersistence
     }
 
-    data class State(var prefixes: HashMap<String, String> = HashMap())
+    data class State(var rules: MutableList<Rule> = ArrayList())
 }

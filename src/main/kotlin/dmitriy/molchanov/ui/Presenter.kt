@@ -1,6 +1,6 @@
 package main.kotlin.dmitriy.molchanov.ui
 
-import main.kotlin.dmitriy.molchanov.model.Prefix
+import main.kotlin.dmitriy.molchanov.model.Rule
 import main.kotlin.dmitriy.molchanov.ui.add.AddRuleDialog
 import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
 
@@ -9,47 +9,44 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
     private lateinit var settingsDialog: SettingsDialog
 
     fun showMain() {
-        val prefixes = repository.getPrefixes()
+        val rules = repository.getRules()
         settingsDialog = SettingsDialog(this)
-        settingsDialog.addPrefixes(prefixes)
+        settingsDialog.addRules(rules)
         settingsDialog.show()
     }
 
     override fun onAddClick() {
-        showAddRuleDialog { newPrefix ->
-            repository.addPrefix(newPrefix)
-            settingsDialog.addPrefix(newPrefix)
+        showAddRuleDialog { newRule ->
+            repository.addRule(newRule)
+            settingsDialog.addRule(newRule)
         }
     }
 
     override fun onRemoveClick() {
-        val prefixes = settingsDialog.getSelectedPrefixes()
-        repository.removePrefixes(prefixes)
+        val rules = settingsDialog.getSelectedRules()
+        repository.removeRule(rules)
         updateSettingsDialogTable()
     }
 
     override fun onEditClick() {
-        val prefix = settingsDialog.getSelectedPrefixes().firstOrNull() ?: return
-        showAddRuleDialog(prefix) { newPrefix ->
-            repository.removePrefix(prefix)
-            repository.addPrefix(newPrefix)
+        val rule = settingsDialog.getSelectedRules().firstOrNull() ?: return
+        showAddRuleDialog(rule) { newRule ->
+            repository.removeRule(rule)
+            repository.addRule(newRule)
             updateSettingsDialogTable()
         }
     }
 
-    private inline fun showAddRuleDialog(editablePrefix: Prefix? = null, onSuccess: (Prefix) -> Unit) {
-        val addRuleDialog = AddRuleDialog(editablePrefix)
+    private inline fun showAddRuleDialog(editableRule: Rule? = null, onSuccess: (Rule) -> Unit) {
+        val addRuleDialog = AddRuleDialog(editableRule)
         if (addRuleDialog.showAndGet()) {
-            val newPrefix = addRuleDialog.getPrefix()
-            onSuccess(newPrefix)
+            onSuccess(addRuleDialog.rule)
         }
     }
 
     private fun updateSettingsDialogTable() {
-        val prefixes = repository.getPrefixes()
-        settingsDialog.clearPrefixes()
-        settingsDialog.addPrefixes(prefixes)
+        val rules = repository.getRules()
+        settingsDialog.clearRules()
+        settingsDialog.addRules(rules)
     }
-
-    private fun AddRuleDialog.getPrefix() = Prefix(gitRepo, regexPrefix)
 }

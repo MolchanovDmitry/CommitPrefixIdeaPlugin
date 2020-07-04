@@ -1,18 +1,18 @@
 package main.kotlin.dmitriy.molchanov.ui.add
 
 import com.intellij.openapi.ui.DialogWrapper
-import main.kotlin.dmitriy.molchanov.model.Prefix
+import main.kotlin.dmitriy.molchanov.model.Rule
 import javax.swing.*
 
 
-class AddRuleDialog(editablePrefix: Prefix? = null) : DialogWrapper(true) {
+class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
 
-    val gitRepo: String
-        get() = gitRepEdit.text
-    val regexPrefix: String
-        get() = prefixEdit.text
+    val rule: Rule
+        get() = Rule(gitRepEdit.text, prefixEdit.text, checkStringEdit.text)
+
     private val gitRepEdit = JTextField(TEXT_COLUMNS)
     private val prefixEdit = JTextField(TEXT_COLUMNS)
+    private val checkStringEdit = JTextField(TEXT_COLUMNS)
 
     init {
         init()
@@ -26,14 +26,17 @@ class AddRuleDialog(editablePrefix: Prefix? = null) : DialogWrapper(true) {
         val root = BoxLayoutUtils.createVerticalPanel()
         val getRepLabel = JLabel(REPOSITORY)
         val prefixLabel = JLabel(REGEX_PREFIX)
+        val checkStringLabel = JLabel(CHECK_STRING)
         val gitRepGroup = getViewGroup(getRepLabel, gitRepEdit)
         val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
+        val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit)
 
         // Определение размеров надписей к текстовым полям
-        GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel))
+        GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel, checkStringLabel))
 
         root.add(gitRepGroup)
         root.add(prefixGroup)
+        root.add(checkStringGroup)
         return root
     }
 
@@ -49,6 +52,7 @@ class AddRuleDialog(editablePrefix: Prefix? = null) : DialogWrapper(true) {
     private companion object {
         const val REPOSITORY = "Git repo:"
         const val REGEX_PREFIX = "Regex prefix:"
+        const val CHECK_STRING = "Check string:"
         const val TEXT_COLUMNS = 15
     }
 }

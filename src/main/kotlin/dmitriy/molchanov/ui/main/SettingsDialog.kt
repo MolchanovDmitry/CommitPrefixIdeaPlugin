@@ -5,7 +5,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.SizedIcon
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
-import main.kotlin.dmitriy.molchanov.model.Prefix
+import main.kotlin.dmitriy.molchanov.model.Rule
 import org.jdesktop.swingx.HorizontalLayout
 import org.jdesktop.swingx.VerticalLayout
 import java.awt.Dimension
@@ -26,33 +26,34 @@ class SettingsDialog(
     private lateinit var table: JBTable
 
     init {
-        val data = Array(0) { arrayOfNulls<String>(2) }
-        val columnNames = arrayOf(REPOSITORY_TITLE, REGEX_RULE)
+        val data = Array(0) { arrayOfNulls<String>(3) }
+        val columnNames = arrayOf(REPOSITORY_TITLE, REGEX_RULE, CHECK_STRING)
         tableModel = DefaultTableModel(data, columnNames)
 
         init()
         title = "Настройки плагина префикса коммитов"
     }
 
-    fun addPrefix(prefix: Prefix) {
-        arrayOf(prefix.gitRepo, prefix.regexPrefix).let(tableModel::addRow)
+    fun addRule(rule: Rule) {
+        arrayOf(rule.gitRepo, rule.regexPrefix, rule.checkString).let(tableModel::addRow)
     }
 
-    fun addPrefixes(prefixes: List<Prefix>) {
-        prefixes.forEach(::addPrefix)
+    fun addRules(rules: List<Rule>) {
+        rules.forEach(::addRule)
     }
 
-    fun clearPrefixes() {
+    fun clearRules() {
         for (i in tableModel.rowCount - 1 downTo 0) {
             tableModel.removeRow(i)
         }
     }
 
-    fun getSelectedPrefixes() = table.selectedRows
+    fun getSelectedRules() = table.selectedRows
             .map {
                 val repo = tableModel.getValueAt(it, 0) as String
                 val regexPrefix = tableModel.getValueAt(it, 1) as String
-                Prefix(repo, regexPrefix)
+                val checkString = tableModel.getValueAt(it, 2) as String
+                Rule(repo, regexPrefix, checkString)
             }.toList()
 
     override fun createCenterPanel(): JComponent? {
@@ -69,7 +70,7 @@ class SettingsDialog(
 
     private fun getTable(): JBTable {
         val table = JBTable(tableModel)
-        table.preferredScrollableViewportSize = Dimension(500, 200)
+        table.preferredScrollableViewportSize = Dimension(600, 200)
         table.fillsViewportHeight = true
         return table
     }
@@ -104,5 +105,6 @@ class SettingsDialog(
         const val ICON_SIZE = 25
         const val REGEX_RULE = "Regex prefix"
         const val REPOSITORY_TITLE = "Git repository"
+        const val CHECK_STRING = "Check string"
     }
 }

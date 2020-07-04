@@ -37,7 +37,7 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
                 .info.remotes.firstOrNull()
                 ?.firstUrl
                 ?: return null
-        return Repository.instance.getPrefixes()
+        return Repository.instance.getRules()
                 .firstOrNull { it.gitRepo == remoteUrl }
                 ?.regexPrefix
                 ?.let(::Regex)
