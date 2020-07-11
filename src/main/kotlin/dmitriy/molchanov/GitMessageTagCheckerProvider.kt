@@ -26,7 +26,7 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
                 ?.let { taskPrefix -> getConcatenatedMessage(lastComment, taskPrefix, regex) }
                 ?: let {
                     if (!isMasterBranch) {
-                        showMessage("Некорректное наименование ветки, не содержит ${regex.toString()}", project)
+                        showMessage("Некорректное наименование ветки, не содержит $regex", project)
                     }
                     lastComment
                 }
@@ -37,7 +37,8 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
                 .info.remotes.firstOrNull()
                 ?.firstUrl
                 ?: return null
-        return Repository.instance.getRules()
+        return Repository.instance
+                .getRules()
                 .firstOrNull { it.gitRepo == remoteUrl }
                 ?.regexPrefix
                 ?.let(::Regex)
