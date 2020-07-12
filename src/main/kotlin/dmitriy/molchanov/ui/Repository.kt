@@ -4,14 +4,13 @@ import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import com.intellij.util.xmlb.XmlSerializerUtil
 import main.kotlin.dmitriy.molchanov.Serializer
 import main.kotlin.dmitriy.molchanov.model.Rule
 
-@State(name = "RuleServiceData10", storages = [Storage("ruleServiceData10.xml")])
+@State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
 class Repository : PersistentStateComponent<Repository> {
 
-    private var serializedRules: String? = null
+    var serializedRules: String? = null
 
     fun addRule(rule: Rule) {
         removeRule(rule)
@@ -36,8 +35,9 @@ class Repository : PersistentStateComponent<Repository> {
     }
 
     override fun loadState(stateLoadedFromPersistence: Repository) {
-        XmlSerializerUtil.copyBean(stateLoadedFromPersistence, this)
-        rules = Serializer.deserialize(serializedRules!!)!!
+        stateLoadedFromPersistence.serializedRules
+                ?.let { Serializer.deserialize<Rule>(it) }
+                ?.let { rules = it }
     }
 
     companion object {
