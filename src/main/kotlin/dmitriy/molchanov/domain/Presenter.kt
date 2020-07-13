@@ -1,6 +1,7 @@
-package main.kotlin.dmitriy.molchanov.ui
+package main.kotlin.dmitriy.molchanov.domain
 
 import main.kotlin.dmitriy.molchanov.model.Rule
+import main.kotlin.dmitriy.molchanov.data.Repository
 import main.kotlin.dmitriy.molchanov.ui.add.AddRuleDialog
 import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
 

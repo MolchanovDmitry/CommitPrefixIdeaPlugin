@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dmitriy.molchanov.commit-prefix-plugin</id>
     <name>CommitPrefix</name>
-    <version>1.2</version>
+    <version>1.1</version>
     <vendor email="penopllast@yandex.ru" url="https://github.com/MolchanovDmitry">github</vendor>
 
     <description>Помогает выставить актальный префикс для сообщения коммита</description>
@@ -11,6 +11,11 @@
         <ul>
              <li>Подставка префикса</li>
              <li>Параметризация плагина</li>
+        </ul>
+        <b>1.1</b><br>
+        <ul>
+             <li>Редактирование правил</li>
+             <li>Добавлено поле для проверки регулярного выражения</li>
         </ul>
     ]]>
     </change-notes>
@@ -26,7 +31,7 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="main.kotlin.dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
         <vcs.commitMessageProvider implementation="main.kotlin.dmitriy.molchanov.GitMessageTagCheckerProvider"/>
-        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.ui.Repository"/>
+        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.data.Repository"/>
     </extensions>
 
     <actions>

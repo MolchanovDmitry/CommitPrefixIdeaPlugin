@@ -30,6 +30,8 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         title = "Добавление правила"
         editablePrefix?.gitRepo?.let(gitRepEdit::setText)
         editablePrefix?.regexPrefix?.let(prefixEdit::setText)
+        editablePrefix?.checkString?.let(checkStringEdit::setText)
+        statusLabel.text = getMessage()
     }
 
     override fun createCenterPanel(): JComponent {

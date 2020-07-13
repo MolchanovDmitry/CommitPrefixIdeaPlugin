@@ -1,6 +1,6 @@
-package main.kotlin.dmitriy.molchanov.ui
+package main.kotlin.dmitriy.molchanov.test
 
-import main.kotlin.dmitriy.molchanov.Serializer
+import main.kotlin.dmitriy.molchanov.data.Serializer
 import main.kotlin.dmitriy.molchanov.model.Rule
 import org.junit.Assert.*
 import org.junit.Test

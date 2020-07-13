@@ -10,7 +10,7 @@ import com.intellij.openapi.wm.WindowManager
 import com.intellij.ui.awt.RelativePoint
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
-import main.kotlin.dmitriy.molchanov.ui.Repository
+import main.kotlin.dmitriy.molchanov.data.Repository
 
 class GitMessageTagCheckerProvider : CommitMessageProvider {
 
