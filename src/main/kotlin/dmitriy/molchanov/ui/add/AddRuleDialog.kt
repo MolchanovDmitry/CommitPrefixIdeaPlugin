@@ -20,9 +20,7 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
     private val keyListener = object : KeyListener {
         override fun keyTyped(p0: KeyEvent?) {}
         override fun keyPressed(p0: KeyEvent?) {}
-        override fun keyReleased(p0: KeyEvent?) {
-            statusLabel.text = getMessage()
-        }
+        override fun keyReleased(p0: KeyEvent?) = updateDialogStatus()
     }
 
     init {
@@ -31,7 +29,7 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         editablePrefix?.gitRepo?.let(gitRepEdit::setText)
         editablePrefix?.regexPrefix?.let(prefixEdit::setText)
         editablePrefix?.checkString?.let(checkStringEdit::setText)
-        statusLabel.text = getMessage()
+        updateDialogStatus()
     }
 
     override fun createCenterPanel(): JComponent {
@@ -55,6 +53,12 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         return root
     }
 
+    private fun updateDialogStatus() {
+        val dialogStatus = getDialogStatus()
+        statusLabel.text = dialogStatus.message
+        okAction.isEnabled = dialogStatus.shouldOkButtonActive
+    }
+
     /** Заголовок и ввод git репозитория */
     private fun getViewGroup(label: JLabel, textField: JTextField): JPanel {
         textField.addKeyListener(keyListener)
@@ -71,14 +75,19 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         return group
     }
 
-    private fun getMessage(): String {
+    /**
+     * Получить статус заполнения формы
+     */
+    private fun getDialogStatus(): DialogStatus {
         var message = ""
         if (gitRepEdit.text.isEmpty()) message += "Git repo пуст, "
         if (prefixEdit.text.isEmpty()) message += "Regex prefix пуст, "
         if (checkStringEdit.text.isEmpty()) message += "Check string пуст, "
         if (message.isNotEmpty()) {
             val showedMessage = message.substring(0, message.length - 2)
-            return "<html><font color=red>$showedMessage</font></html>"
+            return DialogStatus(
+                    message = "<html><font color=red>$showedMessage</font></html>",
+                    shouldOkButtonActive = false)
         }
         val regex = Regex(prefixEdit.text)
         val checkStr = checkStringEdit.text
@@ -87,14 +96,20 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
             val startText = checkStr.substring(0, first)
             val matchText = checkStr.substring(first, lastMatch)
             val endText = checkStr.substring(lastMatch)
-            return "<html>" +
-                    "<font color=black>$startText</font>" +
-                    "<font color=green>$matchText</font>" +
-                    "<font color=black>$endText</font>" +
-                    "</html>"
+            return DialogStatus(
+                    message = "<html>" +
+                            "<font color=black>$startText</font>" +
+                            "<font color=green>$matchText</font>" +
+                            "<font color=black>$endText</font>" +
+                            "</html>",
+                    shouldOkButtonActive = true)
         }
-        return "<html><font color=red>Совпадения не найдены</font></html>"
+        return DialogStatus(
+                message = "<html><font color=red>Совпадения не найдены</font></html>",
+                shouldOkButtonActive = false)
     }
+
+    private class DialogStatus(val message: String, val shouldOkButtonActive: Boolean)
 
     private companion object {
         const val REPOSITORY = "Git repo:"
