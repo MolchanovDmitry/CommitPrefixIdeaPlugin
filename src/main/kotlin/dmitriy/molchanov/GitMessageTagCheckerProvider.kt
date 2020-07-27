@@ -1,13 +1,8 @@
 package main.kotlin.dmitriy.molchanov
 
 import com.intellij.openapi.project.Project
-import com.intellij.openapi.ui.MessageType
-import com.intellij.openapi.ui.popup.Balloon
-import com.intellij.openapi.ui.popup.JBPopupFactory
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import com.intellij.openapi.vcs.changes.ui.CommitMessageProvider
-import com.intellij.openapi.wm.WindowManager
-import com.intellij.ui.awt.RelativePoint
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
 import main.kotlin.dmitriy.molchanov.data.Repository
@@ -20,16 +15,10 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
         val currentRepository = gitRepositoryManager.repositories.firstOrNull()
         val branchName = currentRepository?.currentBranch?.name ?: return lastComment
         val regex = getRegexForRepository(currentRepository) ?: return lastComment
-        val isMasterBranch = checkMasterBranch(branchName, project)
         val match = regex.find(branchName)
         return match?.value
                 ?.let { taskPrefix -> getConcatenatedMessage(lastComment, taskPrefix, regex) }
-                ?: let {
-                    if (!isMasterBranch) {
-                        showMessage("Некорректное наименование ветки, не содержит $regex", project)
-                    }
-                    lastComment
-                }
+                ?: lastComment
     }
 
     private fun getRegexForRepository(repository: GitRepository): Regex? {
@@ -50,26 +39,5 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
         return currentPrefix
                 ?.let { lastComment.replace(currentPrefix, taskPrefix) }
                 ?: "$taskPrefix $lastComment"
-    }
-
-    private fun checkMasterBranch(branchName: String, project: Project): Boolean {
-        if (MASTER_BRANCHES.contains(branchName)) {
-            showMessage("Ай яй яй коммитить в $branchName!", project)
-            return true
-        }
-        return false
-    }
-
-    private fun showMessage(message: String, p: Project) {
-        val statusBar = WindowManager.getInstance().getStatusBar(p)
-        JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(message, MessageType.ERROR, null)
-                .setFadeoutTime(5000)
-                .createBalloon()
-                .show(RelativePoint.getCenterOf(statusBar.component), Balloon.Position.atLeft)
-    }
-
-    private companion object {
-        val MASTER_BRANCHES = arrayOf("dev", "develop", "master")
     }
 }
