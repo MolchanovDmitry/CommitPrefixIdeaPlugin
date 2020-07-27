@@ -39,7 +39,7 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
                 ?: return null
         return Repository.instance
                 .getRules()
-                .firstOrNull { it.gitRepo == remoteUrl }
+                .firstOrNull { it.gitRepo.trim() == remoteUrl.trim() }
                 ?.regexPrefix
                 ?.let(::Regex)
     }
