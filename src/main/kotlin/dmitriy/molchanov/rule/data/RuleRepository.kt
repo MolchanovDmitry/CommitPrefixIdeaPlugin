@@ -1,13 +1,13 @@
-package main.kotlin.dmitriy.molchanov.data
+package main.kotlin.dmitriy.molchanov.rule.data
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import main.kotlin.dmitriy.molchanov.model.Rule
+import main.kotlin.dmitriy.molchanov.rule.model.Rule
 
 @State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
-class Repository : PersistentStateComponent<Repository> {
+class RuleRepository : PersistentStateComponent<RuleRepository> {
 
     @Suppress("MemberVisibilityCanBePrivate")
     var serializedRules: String? = null
@@ -29,12 +29,12 @@ class Repository : PersistentStateComponent<Repository> {
         rules.forEach(::removeRule)
     }
 
-    override fun getState(): Repository {
+    override fun getState(): RuleRepository {
         serializedRules = Serializer.serialize(rules)
         return this
     }
 
-    override fun loadState(stateLoadedFromPersistence: Repository) {
+    override fun loadState(stateLoadedFromPersistence: RuleRepository) {
         stateLoadedFromPersistence.serializedRules
                 ?.let { Serializer.deserialize<Rule>(it) }
                 ?.let { rules = it }
@@ -42,7 +42,7 @@ class Repository : PersistentStateComponent<Repository> {
 
     companion object {
         var rules: ArrayList<Rule> = ArrayList()
-        val instance: Repository
-            get() = ServiceManager.getService(Repository::class.java)
+        val instance: RuleRepository
+            get() = ServiceManager.getService(RuleRepository::class.java)
     }
 }

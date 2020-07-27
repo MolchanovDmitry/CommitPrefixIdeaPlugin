@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.model
+package main.kotlin.dmitriy.molchanov.rule.model
 
 import java.io.Serializable
 

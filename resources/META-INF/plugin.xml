@@ -31,14 +31,18 @@
     <extensions defaultExtensionNs="com.intellij">
         <postStartupActivity implementation="main.kotlin.dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
         <vcs.commitMessageProvider implementation="main.kotlin.dmitriy.molchanov.GitMessageTagCheckerProvider"/>
-        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.data.Repository"/>
+        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.rule.data.RuleRepository"/>
     </extensions>
 
     <actions>
-        <action class="main.kotlin.dmitriy.molchanov.ui.CommitPrefixAction" id="CommitPrefixAction"
-                text="Commit Prefix Plugin">
+        <group id="org.intellij.sdk.action.GroupedActions" text="Commit Prefix Plugin" popup="true"
+               icon="AllIcons.General.Settings">
             <add-to-group group-id="ToolsMenu"/>
-        </action>
+            <action class="main.kotlin.dmitriy.molchanov.CommitPrefixAction" id="CommitPrefixAction"
+                    text="Edit Rules"/>
+            <action class="main.kotlin.dmitriy.molchanov.WarningAction" id="WarningAction"
+                    text="Edit Warning Messages"/>
+        </group>
     </actions>
 
 </idea-plugin>

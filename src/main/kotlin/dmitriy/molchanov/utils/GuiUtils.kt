@@ -1,6 +1,7 @@
-package main.kotlin.dmitriy.molchanov.ui.add
+package main.kotlin.dmitriy.molchanov.utils
 
-import javax.swing.JComponent
+import java.awt.event.KeyListener
+import javax.swing.*
 
 
 object GuiUtils {
@@ -34,5 +35,15 @@ object GuiUtils {
             if (array[i] > array[maxPos]) maxPos = i
         }
         return maxPos
+    }
+
+    /** Заголовок и ввод git репозитория */
+    fun getViewGroup(label: JLabel, textField: JTextField, keyListener: KeyListener): JPanel {
+        textField.addKeyListener(keyListener)
+        val group = BoxLayoutUtils.createHorizontalPanel()
+        group.add(label)
+        group.add(Box.createHorizontalStrut(10))
+        group.add(textField)
+        return group
     }
 }

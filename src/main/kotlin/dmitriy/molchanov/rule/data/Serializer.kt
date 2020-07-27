@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.data
+package main.kotlin.dmitriy.molchanov.rule.data
 
 import org.apache.commons.codec.binary.Base64
 import java.io.*

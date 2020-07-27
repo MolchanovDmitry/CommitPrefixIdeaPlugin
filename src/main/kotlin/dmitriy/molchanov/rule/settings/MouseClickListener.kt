@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.ui.main
+package main.kotlin.dmitriy.molchanov.rule.settings
 
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener

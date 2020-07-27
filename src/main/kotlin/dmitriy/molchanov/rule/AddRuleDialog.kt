@@ -1,10 +1,16 @@
-package main.kotlin.dmitriy.molchanov.ui.add
+package main.kotlin.dmitriy.molchanov.rule
 
 import com.intellij.openapi.ui.DialogWrapper
-import main.kotlin.dmitriy.molchanov.model.Rule
+import main.kotlin.dmitriy.molchanov.rule.model.Rule
+import main.kotlin.dmitriy.molchanov.utils.BoxLayoutUtils
+import main.kotlin.dmitriy.molchanov.utils.GuiUtils
+import main.kotlin.dmitriy.molchanov.utils.GuiUtils.getViewGroup
+import main.kotlin.dmitriy.molchanov.utils.KeyReleasedListener
 import java.awt.event.KeyEvent
-import java.awt.event.KeyListener
-import javax.swing.*
+import javax.swing.JComponent
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JTextField
 
 
 class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
@@ -17,12 +23,6 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
     private val statusLabel = JLabel("Заполните поля")
 
-    private val keyListener = object : KeyListener {
-        override fun keyTyped(p0: KeyEvent?) {}
-        override fun keyPressed(p0: KeyEvent?) {}
-        override fun keyReleased(p0: KeyEvent?) = updateDialogStatus()
-    }
-
     init {
         init()
         title = "Добавление правила"
@@ -33,15 +33,19 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
     }
 
     override fun createCenterPanel(): JComponent {
+        val keyReleasedListener = object : KeyReleasedListener {
+            override fun keyReleased(var1: KeyEvent?)  = updateDialogStatus()
+        }
+
         // Создание панели для размещение компонентов
         val root = BoxLayoutUtils.createVerticalPanel()
         val getRepLabel = JLabel(REPOSITORY)
         val prefixLabel = JLabel(REGEX_PREFIX)
         val checkStringLabel = JLabel(CHECK_STRING)
-        val gitRepGroup = getViewGroup(getRepLabel, gitRepEdit)
-        val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
+        val gitRepGroup = getViewGroup(getRepLabel, gitRepEdit, keyReleasedListener)
+        val prefixGroup = getViewGroup(prefixLabel, prefixEdit, keyReleasedListener)
         val statusGroup = getCheckText(statusLabel)
-        val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit)
+        val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit, keyReleasedListener)
 
         // Определение размеров надписей к текстовым полям
         GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel, checkStringLabel))
@@ -57,16 +61,6 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         val dialogStatus = getDialogStatus()
         statusLabel.text = dialogStatus.message
         okAction.isEnabled = dialogStatus.shouldOkButtonActive
-    }
-
-    /** Заголовок и ввод git репозитория */
-    private fun getViewGroup(label: JLabel, textField: JTextField): JPanel {
-        textField.addKeyListener(keyListener)
-        val group = BoxLayoutUtils.createHorizontalPanel()
-        group.add(label)
-        group.add(Box.createHorizontalStrut(10))
-        group.add(textField)
-        return group
     }
 
     private fun getCheckText(statusLabel: JLabel): JPanel {

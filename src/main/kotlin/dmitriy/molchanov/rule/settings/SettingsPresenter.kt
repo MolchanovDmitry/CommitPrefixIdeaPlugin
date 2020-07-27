@@ -1,15 +1,14 @@
-package main.kotlin.dmitriy.molchanov.domain
+package main.kotlin.dmitriy.molchanov.rule.settings
 
-import main.kotlin.dmitriy.molchanov.model.Rule
-import main.kotlin.dmitriy.molchanov.data.Repository
-import main.kotlin.dmitriy.molchanov.ui.add.AddRuleDialog
-import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
+import main.kotlin.dmitriy.molchanov.rule.model.Rule
+import main.kotlin.dmitriy.molchanov.rule.data.RuleRepository
+import main.kotlin.dmitriy.molchanov.rule.AddRuleDialog
 
-class Presenter : SettingsDialog.OnSettingsDialogListener {
-    private val repository = Repository.instance
-    private lateinit var settingsDialog: SettingsDialog
+class SettingsPresenter : SettingsDialog.OnSettingsDialogListener {
+    private val repository = RuleRepository.instance
+    private val settingsDialog: SettingsDialog
 
-    fun showMain() {
+    init {
         val rules = repository.getRules()
         settingsDialog = SettingsDialog(this)
         settingsDialog.addRules(rules)

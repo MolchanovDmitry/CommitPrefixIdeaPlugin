@@ -1,11 +1,11 @@
-package main.kotlin.dmitriy.molchanov.ui.main
+package main.kotlin.dmitriy.molchanov.rule.settings
 
 import com.intellij.icons.AllIcons
 import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.SizedIcon
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
-import main.kotlin.dmitriy.molchanov.model.Rule
+import main.kotlin.dmitriy.molchanov.rule.model.Rule
 import org.jdesktop.swingx.HorizontalLayout
 import org.jdesktop.swingx.VerticalLayout
 import java.awt.Dimension

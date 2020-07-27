@@ -10,7 +10,7 @@ import com.intellij.openapi.wm.WindowManager
 import com.intellij.ui.awt.RelativePoint
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
-import main.kotlin.dmitriy.molchanov.data.Repository
+import main.kotlin.dmitriy.molchanov.rule.data.RuleRepository
 
 class GitMessageTagCheckerProvider : CommitMessageProvider {
 
@@ -37,7 +37,7 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
                 .info.remotes.firstOrNull()
                 ?.firstUrl
                 ?: return null
-        return Repository.instance
+        return RuleRepository.instance
                 .getRules()
                 .firstOrNull { it.gitRepo == remoteUrl }
                 ?.regexPrefix

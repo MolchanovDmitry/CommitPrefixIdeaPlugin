@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.ui.add
+package main.kotlin.dmitriy.molchanov.utils
 
 import java.awt.Dimension
 import javax.swing.BoxLayout
