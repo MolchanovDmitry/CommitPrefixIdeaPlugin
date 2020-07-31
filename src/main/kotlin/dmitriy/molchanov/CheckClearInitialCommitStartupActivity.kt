@@ -20,12 +20,8 @@ class CheckClearInitialCommitStartupActivity : StartupActivity {
 
     private fun showDisableDialog(project: Project) {
         val statusBar = WindowManager.getInstance().getStatusBar(project)
-
         JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(
-                        "Для работы плагина CommitMessageRefactorer, необходимо выключить опцию \"Clear initial commit message\" <a href=\"enable\">Выключить</a>",
-                        MessageType.WARNING
-                ) {
+                .createHtmlTextBalloonBuilder(Strings.DISABLE_CLEAR_INITIAL_OPTION, MessageType.WARNING) {
                     if (it.eventType == HyperlinkEvent.EventType.ACTIVATED) {
                         enableClearInitialCommitMessage(project)
                     }
@@ -42,11 +38,7 @@ class CheckClearInitialCommitStartupActivity : StartupActivity {
 
         val statusBar = WindowManager.getInstance().getStatusBar(project)
         JBPopupFactory.getInstance()
-                .createHtmlTextBalloonBuilder(
-                        "Опция выключена.",
-                        MessageType.INFO,
-                        null
-                )
+                .createHtmlTextBalloonBuilder(Strings.SUCCESS_DISABLE, MessageType.INFO, null)
                 .setFadeoutTime(3000)
                 .createBalloon()
                 .show(RelativePoint.getCenterOf(statusBar.component), Balloon.Position.atLeft)

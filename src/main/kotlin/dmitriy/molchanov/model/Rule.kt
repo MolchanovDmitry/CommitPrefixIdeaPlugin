@@ -1,5 +1,6 @@
 package main.kotlin.dmitriy.molchanov.model
 
+import main.kotlin.dmitriy.molchanov.Strings
 import java.io.Serializable
 
 class Rule : Serializable {
@@ -9,9 +10,9 @@ class Rule : Serializable {
 
     @Suppress("unused") //serialization fix
     constructor() {
-        gitRepo = ""
-        regexPrefix = ""
-        checkString = ""
+        gitRepo = Strings.EMPTY
+        regexPrefix = Strings.EMPTY
+        checkString = Strings.EMPTY
     }
 
     constructor(gitRepo: String,

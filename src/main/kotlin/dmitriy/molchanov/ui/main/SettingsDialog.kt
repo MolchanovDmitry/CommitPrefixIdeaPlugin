@@ -5,6 +5,7 @@ import com.intellij.openapi.ui.DialogWrapper
 import com.intellij.ui.SizedIcon
 import com.intellij.ui.components.JBScrollPane
 import com.intellij.ui.table.JBTable
+import main.kotlin.dmitriy.molchanov.Strings
 import main.kotlin.dmitriy.molchanov.model.Rule
 import org.jdesktop.swingx.HorizontalLayout
 import org.jdesktop.swingx.VerticalLayout
@@ -27,11 +28,11 @@ class SettingsDialog(
 
     init {
         val data = Array(0) { arrayOfNulls<String>(3) }
-        val columnNames = arrayOf(REPOSITORY_TITLE, REGEX_RULE, CHECK_STRING)
+        val columnNames = arrayOf(Strings.REPOSITORY_TITLE, Strings.REGEX_RULE, Strings.CHECK_STRING)
         tableModel = DefaultTableModel(data, columnNames)
 
         init()
-        title = "Настройки плагина префикса коммитов"
+        title = Strings.COMMIT_PLUGIN_SETTINGS
     }
 
     fun addRule(rule: Rule) {
@@ -103,8 +104,5 @@ class SettingsDialog(
 
     private companion object {
         const val ICON_SIZE = 25
-        const val REGEX_RULE = "Regex prefix"
-        const val REPOSITORY_TITLE = "Git repository"
-        const val CHECK_STRING = "Check string"
     }
 }

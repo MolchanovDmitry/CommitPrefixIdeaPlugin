@@ -1,6 +1,7 @@
 package main.kotlin.dmitriy.molchanov.ui.add
 
 import com.intellij.openapi.ui.DialogWrapper
+import main.kotlin.dmitriy.molchanov.Strings
 import main.kotlin.dmitriy.molchanov.model.Rule
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
@@ -15,7 +16,7 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
     private val gitRepEdit = JTextField(TEXT_COLUMNS)
     private val prefixEdit = JTextField(TEXT_COLUMNS)
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
-    private val statusLabel = JLabel("Заполните поля")
+    private val statusLabel = JLabel(Strings.FILL_FIELDS)
 
     private val keyListener = object : KeyListener {
         override fun keyTyped(p0: KeyEvent?) {}
@@ -25,7 +26,7 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
 
     init {
         init()
-        title = "Добавление правила"
+        title = Strings.ADD_RULE
         editablePrefix?.gitRepo?.let(gitRepEdit::setText)
         editablePrefix?.regexPrefix?.let(prefixEdit::setText)
         editablePrefix?.checkString?.let(checkStringEdit::setText)
@@ -35,9 +36,9 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
     override fun createCenterPanel(): JComponent {
         // Создание панели для размещение компонентов
         val root = BoxLayoutUtils.createVerticalPanel()
-        val getRepLabel = JLabel(REPOSITORY)
-        val prefixLabel = JLabel(REGEX_PREFIX)
-        val checkStringLabel = JLabel(CHECK_STRING)
+        val getRepLabel = JLabel(Strings.GIT_REPO)
+        val prefixLabel = JLabel(Strings.REGEX_PREFIX)
+        val checkStringLabel = JLabel(Strings.CHECK_BRANCH)
         val gitRepGroup = getViewGroup(getRepLabel, gitRepEdit)
         val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
         val statusGroup = getCheckText(statusLabel)
@@ -79,10 +80,10 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
      * Получить статус заполнения формы
      */
     private fun getDialogStatus(): DialogStatus {
-        var message = ""
-        if (gitRepEdit.text.isEmpty()) message += "Git repo пуст, "
-        if (prefixEdit.text.isEmpty()) message += "Regex prefix пуст, "
-        if (checkStringEdit.text.isEmpty()) message += "Check string пуст, "
+        var message = Strings.EMPTY
+        if (gitRepEdit.text.isEmpty()) message += "${Strings.GIT_REPO_WARNING}, "
+        if (prefixEdit.text.isEmpty()) message += "${Strings.REGEX_PREFIX_WARNING}, "
+        if (checkStringEdit.text.isEmpty()) message += "${Strings.CHECK_BRANCH_WARNING}, "
         if (message.isNotEmpty()) {
             val showedMessage = message.substring(0, message.length - 2)
             return DialogStatus(
@@ -105,16 +106,13 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
                     shouldOkButtonActive = true)
         }
         return DialogStatus(
-                message = "<html><font color=red>Совпадения не найдены</font></html>",
+                message = "<html><font color=red>${Strings.NO_MATCHES_FOUND}</font></html>",
                 shouldOkButtonActive = false)
     }
 
     private class DialogStatus(val message: String, val shouldOkButtonActive: Boolean)
 
     private companion object {
-        const val REPOSITORY = "Git repo:"
-        const val REGEX_PREFIX = "Regex prefix:"
-        const val CHECK_STRING = "Check branch:"
         const val TEXT_COLUMNS = 15
     }
 }
