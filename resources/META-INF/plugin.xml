@@ -4,19 +4,19 @@
     <version>1.1</version>
     <vendor email="penopllast@yandex.ru" url="https://github.com/MolchanovDmitry">github</vendor>
 
-    <description>Помогает выставить актальный префикс для сообщения коммита</description>
+    <description>Helps to insert the actual prefix for the commit message</description>
 
     <change-notes><![CDATA[
         <b>1.1</b><br>
-        <ul>
-             <li>Редактирование правил</li>
-             <li>Добавлено поле для проверки регулярного выражения</li>
-        </ul>
-        <b>1.0</b><br>
-        <ul>
-             <li>Подставка префикса</li>
-             <li>Параметризация плагина</li>
-        </ul>
+         <ul>
+              <li>Added the ability to edit rules</li>
+              <li>Added a field for checking regular expression</li>
+         </ul>
+         <b>1.0</b><br>
+         <ul>
+              <li>Base Prefix</li>
+              <li>Added the ability to parameterize the plugin</li>
+         </ul>
     ]]>
     </change-notes>
 
