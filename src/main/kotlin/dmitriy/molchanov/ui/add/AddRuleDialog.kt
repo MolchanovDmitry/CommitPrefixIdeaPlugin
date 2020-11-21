@@ -1,5 +1,6 @@
 package main.kotlin.dmitriy.molchanov.ui.add
 
+import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
 import main.kotlin.dmitriy.molchanov.Strings
 import main.kotlin.dmitriy.molchanov.model.Rule
@@ -8,12 +9,17 @@ import java.awt.event.KeyListener
 import javax.swing.*
 
 
-class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
+class AddRuleDialog(
+        editablePrefix: Rule? = null,
+        gitRepUrls: List<String>
+) : DialogWrapper(true) {
 
     val rule: Rule
-        get() = Rule(gitRepEdit.text, prefixEdit.text, checkStringEdit.text)
+        get() = Rule(selectedGitRep, prefixEdit.text, checkStringEdit.text)
 
-    private val gitRepEdit = JTextField(TEXT_COLUMNS)
+    private val selectedGitRep: String
+        get() = gitRepBox.selectedItem?.toString() ?: ""
+    private val gitRepBox = ComboBox(gitRepUrls.toTypedArray())
     private val prefixEdit = JTextField(TEXT_COLUMNS)
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
     private val statusLabel = JLabel(Strings.FILL_FIELDS)
@@ -26,8 +32,9 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
 
     init {
         init()
+        gitRepBox.isEditable = true
         title = Strings.ADD_RULE
-        editablePrefix?.gitRepo?.let(gitRepEdit::setText)
+        editablePrefix?.gitRepo?.let(gitRepBox::setToolTipText)
         editablePrefix?.regexPrefix?.let(prefixEdit::setText)
         editablePrefix?.checkString?.let(checkStringEdit::setText)
         updateDialogStatus()
@@ -39,7 +46,7 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         val getRepLabel = JLabel(Strings.GIT_REPO)
         val prefixLabel = JLabel(Strings.REGEX_PREFIX)
         val checkStringLabel = JLabel(Strings.CHECK_BRANCH)
-        val gitRepGroup = getViewGroup(getRepLabel, gitRepEdit)
+        val gitRepGroup = getViewGroup(getRepLabel, gitRepBox)
         val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
         val statusGroup = getCheckText(statusLabel)
         val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit)
@@ -65,25 +72,33 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
         textField.addKeyListener(keyListener)
         val group = BoxLayoutUtils.createHorizontalPanel()
         group.add(label)
-        group.add(Box.createHorizontalStrut(10))
+        group.add(Box.createHorizontalStrut(HORIZONTAL_STRUT))
         group.add(textField)
         return group
     }
 
-    private fun getCheckText(statusLabel: JLabel): JPanel {
+    private fun getViewGroup(label: JLabel, textField: ComboBox<*>): JPanel {
+        textField.addKeyListener(keyListener)
         val group = BoxLayoutUtils.createHorizontalPanel()
-        group.add(statusLabel)
+        group.add(label)
+        group.add(Box.createHorizontalStrut(HORIZONTAL_STRUT))
+        group.add(textField)
         return group
     }
+
+    private fun getCheckText(statusLabel: JLabel): JPanel =
+            BoxLayoutUtils.createHorizontalPanel().apply {
+                add(statusLabel)
+            }
 
     /**
      * Получить статус заполнения формы
      */
     private fun getDialogStatus(): DialogStatus {
         var message = Strings.EMPTY
-        if (gitRepEdit.text.isEmpty()) message += "${Strings.GIT_REPO_WARNING}, "
-        if (prefixEdit.text.isEmpty()) message += "${Strings.REGEX_PREFIX_WARNING}, "
-        if (checkStringEdit.text.isEmpty()) message += "${Strings.CHECK_BRANCH_WARNING}, "
+        if (selectedGitRep.isNullOrEmpty()) message += "${Strings.GIT_REPO_WARNING}, "
+        if (prefixEdit.text.isNullOrEmpty()) message += "${Strings.REGEX_PREFIX_WARNING}, "
+        if (checkStringEdit.text.isNullOrEmpty()) message += "${Strings.CHECK_BRANCH_WARNING}, "
         if (message.isNotEmpty()) {
             val showedMessage = message.substring(0, message.length - 2)
             return DialogStatus(
@@ -114,5 +129,6 @@ class AddRuleDialog(editablePrefix: Rule? = null) : DialogWrapper(true) {
 
     private companion object {
         const val TEXT_COLUMNS = 15
+        const val HORIZONTAL_STRUT = 10
     }
 }

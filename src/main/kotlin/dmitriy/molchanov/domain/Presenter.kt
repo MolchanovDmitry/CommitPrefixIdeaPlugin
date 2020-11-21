@@ -1,11 +1,15 @@
 package main.kotlin.dmitriy.molchanov.domain
 
-import main.kotlin.dmitriy.molchanov.model.Rule
+import com.intellij.openapi.project.ProjectManager
+import git4idea.repo.GitRepositoryManager
 import main.kotlin.dmitriy.molchanov.data.Repository
+import main.kotlin.dmitriy.molchanov.model.Rule
 import main.kotlin.dmitriy.molchanov.ui.add.AddRuleDialog
 import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
 
+
 class Presenter : SettingsDialog.OnSettingsDialogListener {
+
     private val repository = Repository.instance
     private lateinit var settingsDialog: SettingsDialog
 
@@ -39,7 +43,8 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
     }
 
     private inline fun showAddRuleDialog(editableRule: Rule? = null, onSuccess: (Rule) -> Unit) {
-        val addRuleDialog = AddRuleDialog(editableRule)
+        val repUrls = getGitRepUrls()
+        val addRuleDialog = AddRuleDialog(editableRule, repUrls)
         if (addRuleDialog.showAndGet()) {
             onSuccess(addRuleDialog.rule)
         }
@@ -49,5 +54,17 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
         val rules = repository.getRules()
         settingsDialog.clearRules()
         settingsDialog.addRules(rules)
+    }
+
+    private fun getGitRepUrls(): List<String> {
+        val gitRepUrls = mutableListOf<String>()
+        ProjectManager.getInstance().openProjects
+                .map(GitRepositoryManager::getInstance)
+                .forEach { gitRepManager ->
+                    gitRepManager.repositories
+                            .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
+                            .forEach { url -> gitRepUrls.add(url) }
+                }
+        return gitRepUrls
     }
 }
