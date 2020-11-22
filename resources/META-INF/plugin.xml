@@ -7,16 +7,20 @@
     <description>Helps you to insert the task number from current branch to the beginning of the commit message.</description>
 
     <change-notes><![CDATA[
+        <b>1.2</b><br>
+        <ul>
+             <li>Improved usability</li>
+        </ul>
         <b>1.1</b><br>
-         <ul>
-              <li>Added the ability to edit rules</li>
-              <li>Added a field for checking regular expression</li>
-         </ul>
-         <b>1.0</b><br>
-         <ul>
-              <li>Base Prefix</li>
-              <li>Added the ability to parameterize the plugin</li>
-         </ul>
+        <ul>
+             <li>Added the ability to edit rules</li>
+             <li>Added a field for checking regular expression</li>
+        </ul>
+        <b>1.0</b><br>
+        <ul>
+             <li>Base Prefix</li>
+             <li>Added the ability to parameterize the plugin</li>
+        </ul>
     ]]>
     </change-notes>
 
