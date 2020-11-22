@@ -11,6 +11,8 @@ import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
 class Presenter : SettingsDialog.OnSettingsDialogListener {
 
     private val repository = Repository.instance
+    private val repositoryManagers = ProjectManager.getInstance().openProjects
+            .map(GitRepositoryManager::getInstance)
     private lateinit var settingsDialog: SettingsDialog
 
     fun showMain() {
@@ -44,10 +46,21 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
 
     private inline fun showAddRuleDialog(editableRule: Rule? = null, onSuccess: (Rule) -> Unit) {
         val repUrls = getGitRepUrls()
-        val addRuleDialog = AddRuleDialog(editableRule, repUrls)
+        val addRuleDialog = AddRuleDialog(editableRule, repUrls, ::getCurBranchByUrl)
         if (addRuleDialog.showAndGet()) {
-            onSuccess(addRuleDialog.rule)
+            addRuleDialog.rule?.let(onSuccess)
         }
+    }
+
+    private fun getCurBranchByUrl(url: String): String? {
+        var currentBranchName: String? = null
+        repositoryManagers.forEach { gitRepositoryManager ->
+            gitRepositoryManager.repositories
+                    .firstOrNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl == url }
+                    ?.currentBranch
+                    ?.let { currentBranchName = it.name }
+        }
+        return currentBranchName
     }
 
     private fun updateSettingsDialogTable() {
@@ -58,13 +71,11 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
 
     private fun getGitRepUrls(): List<String> {
         val gitRepUrls = mutableListOf<String>()
-        ProjectManager.getInstance().openProjects
-                .map(GitRepositoryManager::getInstance)
-                .forEach { gitRepManager ->
-                    gitRepManager.repositories
-                            .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
-                            .forEach { url -> gitRepUrls.add(url) }
-                }
+        repositoryManagers.forEach { gitRepManager ->
+            gitRepManager.repositories
+                    .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
+                    .forEach { url -> gitRepUrls.add(url) }
+        }
         return gitRepUrls
     }
 }

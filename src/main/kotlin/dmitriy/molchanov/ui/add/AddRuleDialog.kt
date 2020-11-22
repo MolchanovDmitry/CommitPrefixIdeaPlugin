@@ -8,17 +8,24 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.*
 
-
+/**
+ * Дилог сохранения/редактирования правила
+ *
+ * @param editablePrefix редактируемое правило. Если null, значит создаем новое.
+ * @param gitRepUrls список активных Git репозиториев (репозиториев открытых проектов).
+ * @property getCurBranchByUrl функция получения текущей ветки по выбранному репозиторию.
+ */
 class AddRuleDialog(
         editablePrefix: Rule? = null,
-        gitRepUrls: List<String>
+        gitRepUrls: List<String>,
+        private val getCurBranchByUrl: (String) -> String?
 ) : DialogWrapper(true) {
 
-    val rule: Rule
-        get() = Rule(selectedGitRep, prefixEdit.text, checkStringEdit.text)
+    val rule: Rule?
+        get() = selectedGitRep?.let { Rule(it, prefixEdit.text, checkStringEdit.text) }
 
-    private val selectedGitRep: String
-        get() = gitRepBox.selectedItem?.toString() ?: ""
+    private val selectedGitRep: String?
+        get() = gitRepBox.selectedItem?.toString()
     private val gitRepBox = ComboBox(gitRepUrls.toTypedArray())
     private val prefixEdit = JTextField(TEXT_COLUMNS)
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
@@ -33,10 +40,13 @@ class AddRuleDialog(
     init {
         init()
         gitRepBox.isEditable = true
+        gitRepBox.addActionListener { updateCheckString() }
         title = Strings.ADD_RULE
         editablePrefix?.gitRepo?.let(gitRepBox::setToolTipText)
         editablePrefix?.regexPrefix?.let(prefixEdit::setText)
-        editablePrefix?.checkString?.let(checkStringEdit::setText)
+        editablePrefix?.checkString
+                ?.let(checkStringEdit::setText)
+                ?: updateCheckString()
         updateDialogStatus()
     }
 
@@ -61,30 +71,27 @@ class AddRuleDialog(
         return root
     }
 
+    /** Берем текущую ветку из выбранного репозитория и вставляем в [checkStringEdit] */
+    private fun updateCheckString() {
+        selectedGitRep
+                ?.let(getCurBranchByUrl)
+                ?.let(checkStringEdit::setText)
+    }
+
     private fun updateDialogStatus() {
         val dialogStatus = getDialogStatus()
         statusLabel.text = dialogStatus.message
         okAction.isEnabled = dialogStatus.shouldOkButtonActive
     }
 
-    /** Заголовок и ввод git репозитория */
-    private fun getViewGroup(label: JLabel, textField: JTextField): JPanel {
-        textField.addKeyListener(keyListener)
-        val group = BoxLayoutUtils.createHorizontalPanel()
-        group.add(label)
-        group.add(Box.createHorizontalStrut(HORIZONTAL_STRUT))
-        group.add(textField)
-        return group
-    }
-
-    private fun getViewGroup(label: JLabel, textField: ComboBox<*>): JPanel {
-        textField.addKeyListener(keyListener)
-        val group = BoxLayoutUtils.createHorizontalPanel()
-        group.add(label)
-        group.add(Box.createHorizontalStrut(HORIZONTAL_STRUT))
-        group.add(textField)
-        return group
-    }
+    /** Получить строку вида "текст _ поле для ввода" */
+    private fun getViewGroup(label: JLabel, component: JComponent): JPanel =
+            BoxLayoutUtils.createHorizontalPanel().apply {
+                component.addKeyListener(keyListener)
+                add(label)
+                add(Box.createHorizontalStrut(HORIZONTAL_STRUT))
+                add(component)
+            }
 
     private fun getCheckText(statusLabel: JLabel): JPanel =
             BoxLayoutUtils.createHorizontalPanel().apply {
