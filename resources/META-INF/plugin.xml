@@ -1,7 +1,7 @@
 <idea-plugin>
     <id>dmitriy.molchanov.commit-prefix-plugin</id>
     <name>CommitPrefix</name>
-    <version>1.1</version>
+    <version>1.2</version>
     <vendor email="penopllast@yandex.ru" url="https://github.com/MolchanovDmitry">github</vendor>
 
     <description>Helps you to insert the task number from current branch to the beginning of the commit message.</description>
