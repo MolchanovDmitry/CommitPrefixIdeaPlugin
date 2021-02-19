@@ -4,7 +4,17 @@
     <version>1.2</version>
     <vendor email="penopllast@yandex.ru" url="https://github.com/MolchanovDmitry">github</vendor>
 
-    <description>Helps you to insert the task number from current branch to the beginning of the commit message.</description>
+    <description><![CDATA[
+        <br>Helps you to insert the task number from current branch to the beginning of the commit message.</br>
+        <br></br>
+
+        <br>Usage sample:</br>
+        <p><img src="https://plugins.jetbrains.com/files/16109/screenshot_0845b70e-e515-477b-9ab9-d01e7a387ecf" alt="demo" width="600" height="360"></p>
+
+        <br></br>
+        <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin">Full Usage Documentation</a></br>
+    ]]>
+    </description>
 
     <change-notes><![CDATA[
         <b>1.2</b><br>
@@ -33,13 +43,13 @@
     <depends>Git4Idea</depends>
 
     <extensions defaultExtensionNs="com.intellij">
-        <postStartupActivity implementation="main.kotlin.dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
-        <vcs.commitMessageProvider implementation="main.kotlin.dmitriy.molchanov.GitMessageTagCheckerProvider"/>
-        <applicationService serviceImplementation="main.kotlin.dmitriy.molchanov.data.Repository"/>
+        <postStartupActivity implementation="dmitriy.molchanov.CheckClearInitialCommitStartupActivity"/>
+        <vcs.commitMessageProvider implementation="dmitriy.molchanov.GitMessageTagCheckerProvider"/>
+        <applicationService serviceImplementation="dmitriy.molchanov.data.Repository"/>
     </extensions>
 
     <actions>
-        <action class="main.kotlin.dmitriy.molchanov.ui.CommitPrefixAction" id="CommitPrefixAction"
+        <action class="dmitriy.molchanov.ui.CommitPrefixAction" id="CommitPrefixAction"
                 text="Commit Prefix Plugin">
             <add-to-group group-id="ToolsMenu"/>
         </action>

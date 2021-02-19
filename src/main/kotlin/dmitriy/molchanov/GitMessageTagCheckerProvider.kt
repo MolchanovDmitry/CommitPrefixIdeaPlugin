@@ -1,11 +1,11 @@
-package main.kotlin.dmitriy.molchanov
+package dmitriy.molchanov
 
 import com.intellij.openapi.project.Project
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import com.intellij.openapi.vcs.changes.ui.CommitMessageProvider
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
-import main.kotlin.dmitriy.molchanov.data.Repository
+import dmitriy.molchanov.data.Repository
 
 class GitMessageTagCheckerProvider : CommitMessageProvider {
 

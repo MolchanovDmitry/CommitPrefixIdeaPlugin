@@ -1,6 +1,6 @@
-package main.kotlin.dmitriy.molchanov.model
+package dmitriy.molchanov.model
 
-import main.kotlin.dmitriy.molchanov.Strings
+import dmitriy.molchanov.Strings
 import java.io.Serializable
 
 class Rule : Serializable {

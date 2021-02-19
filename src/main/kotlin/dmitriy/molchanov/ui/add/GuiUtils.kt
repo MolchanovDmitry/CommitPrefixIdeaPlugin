@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.ui.add
+package dmitriy.molchanov.ui.add
 
 import javax.swing.JComponent
 

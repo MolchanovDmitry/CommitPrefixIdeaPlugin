@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov
+package dmitriy.molchanov
 
 object Strings {
     const val EMPTY = ""

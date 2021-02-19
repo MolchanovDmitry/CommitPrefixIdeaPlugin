@@ -1,9 +1,9 @@
-package main.kotlin.dmitriy.molchanov.ui.add
+package dmitriy.molchanov.ui.add
 
 import com.intellij.openapi.ui.ComboBox
 import com.intellij.openapi.ui.DialogWrapper
-import main.kotlin.dmitriy.molchanov.Strings
-import main.kotlin.dmitriy.molchanov.model.Rule
+import dmitriy.molchanov.Strings
+import dmitriy.molchanov.model.Rule
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.*
@@ -16,9 +16,9 @@ import javax.swing.*
  * @property getCurBranchByUrl функция получения текущей ветки по выбранному репозиторию.
  */
 class AddRuleDialog(
-        editablePrefix: Rule? = null,
-        gitRepUrls: List<String>,
-        private val getCurBranchByUrl: (String) -> String?
+    editablePrefix: Rule? = null,
+    gitRepUrls: List<String>,
+    private val getCurBranchByUrl: (String) -> String?
 ) : DialogWrapper(true) {
 
     val rule: Rule?

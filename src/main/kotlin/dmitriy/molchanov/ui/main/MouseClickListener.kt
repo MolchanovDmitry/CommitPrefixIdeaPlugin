@@ -1,4 +1,4 @@
-package main.kotlin.dmitriy.molchanov.ui.main
+package dmitriy.molchanov.ui.main
 
 import java.awt.event.MouseEvent
 import java.awt.event.MouseListener

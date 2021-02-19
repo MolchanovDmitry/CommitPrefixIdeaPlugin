@@ -1,11 +1,11 @@
-package main.kotlin.dmitriy.molchanov.domain
+package dmitriy.molchanov.domain
 
 import com.intellij.openapi.project.ProjectManager
 import git4idea.repo.GitRepositoryManager
-import main.kotlin.dmitriy.molchanov.data.Repository
-import main.kotlin.dmitriy.molchanov.model.Rule
-import main.kotlin.dmitriy.molchanov.ui.add.AddRuleDialog
-import main.kotlin.dmitriy.molchanov.ui.main.SettingsDialog
+import dmitriy.molchanov.data.Repository
+import dmitriy.molchanov.model.Rule
+import dmitriy.molchanov.ui.add.AddRuleDialog
+import dmitriy.molchanov.ui.main.SettingsDialog
 
 
 class Presenter : SettingsDialog.OnSettingsDialogListener {

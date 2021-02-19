@@ -1,10 +1,10 @@
-package main.kotlin.dmitriy.molchanov.data
+package dmitriy.molchanov.data
 
 import com.intellij.openapi.components.PersistentStateComponent
 import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
-import main.kotlin.dmitriy.molchanov.model.Rule
+import dmitriy.molchanov.model.Rule
 
 @State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
 class Repository : PersistentStateComponent<Repository> {
