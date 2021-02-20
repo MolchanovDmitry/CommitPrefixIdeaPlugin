@@ -17,4 +17,7 @@ object Strings {
     const val REPOSITORY_TITLE = "Git repository"
     const val CHECK_STRING = "Check string"
     const val COMMIT_PLUGIN_SETTINGS = "Commit prefix plugin settings"
+    const val LIKE_THIS_PLUGIN = "Like this plugin? Please "
+    const val STAR_ON_GITHUB = "star on github."
+    const val GITHUB_URL = "https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin"
 }
