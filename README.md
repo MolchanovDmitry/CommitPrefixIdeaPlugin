@@ -1,7 +1,7 @@
 [![Kotlin](https://img.shields.io/badge/%20language-Kotlin-red.svg)](https://kotlinlang.org/)
 [![IntelliJ Idea Plugin](https://img.shields.io/badge/plugin-IntelliJ%20%20Idea-blue.svg)](https://plugins.jetbrains.com/plugin/9960-jsontokotlinclass)
 [![Android Studio Plugin](https://img.shields.io/badge/plugin-AndroidStudio-green.svg)](https://plugins.jetbrains.com/plugin/9960-jsontokotlinclass)
-
+[![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=left&message=right&color=red)]()
 # Commit prefix plugin 
 Helps you to insert the task number from current branch to the beginning of the commit message.
 
