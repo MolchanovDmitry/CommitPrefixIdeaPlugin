@@ -22,19 +22,15 @@ jobs:
       
       - name: Change wrapper permissions
         run: chmod +x ./gradlew
-
-      # Runs a single command using the runners shell
-      - name: Run a one-line script
-        run: ./gradlew build
       
+       # Runs a set of commands using the runners shell
+      - name: Build plugin
+        run: ./gradlew buildPlugin
+        
       - uses: actions/download-artifact@v2
         with:
           name: my-artifact
           path: build/patchedPluginXmlFiles
-
-      # Runs a set of commands using the runners shell
-      - name: Build plugin
-        run: ./gradlew buildPlugin
         
       - name: Display structure of downloaded files
         run: ls -R
