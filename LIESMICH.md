@@ -3,20 +3,22 @@
 [![Android Studio Plugin](https://img.shields.io/badge/plugin-AndroidStudio-green.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
 [![Android Studio Plugin](https://img.shields.io/badge/plugin-PyCharm-green.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
 
-# Commit prefix plugin 
-Helps you to insert the task number from current branch to the beginning of the commit message.
+# Plug-in zur Einfügung von Präfix in ein Commitmessage
 
-## Instruction
-1. Wait project indexing.
-2. Open Tools -> Commit Prefix Plugin.
-3. Add rule:
+Diese Erweiterung ermöglicht eine automatische Einfügung von Präfix (z.B. die Auftragsnummer aus der aktuellen Branchenbezeichnung) in ein Commitmessage. Sie wurde für IntelliJ IDEA entwickelt, sowie auf Pycharm, Android Studio getestet.
+
+## Anweisungen
+
+1. Das entsprechende Projekt öffnen und abwarten bis Indexierung vollendet ist.
+2. Tools öffnen  -> Commit Prefix Plugin.
+3. Die Regel hinzufügen,indem  Sie das entsprechende Git-Repositorium wählen und eine Regel in Form von einer regulären Expression angeben:
 
 ![](https://plugins.jetbrains.com/files/16109/screenshot_19798028-a4ff-480c-920d-48cc125d3615)
 
-4. Now your commit changes dialog always has actual task prefix in commit message:
+4.  Das aktuelle Präfix wird automatisch im Dialogfenster vom Committee eingefügt   Anwendungsbeispiel:
 
 ![](https://plugins.jetbrains.com/files/16109/screenshot_79c71bec-d556-49ed-87c5-515f7c345de1)
 
-## Usage sample
-   
+##  Beispiel
+
 ![](https://plugins.jetbrains.com/files/16109/screenshot_0845b70e-e515-477b-9ab9-d01e7a387ecf)
