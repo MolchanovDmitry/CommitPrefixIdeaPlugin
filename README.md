@@ -1,5 +1,5 @@
 [![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=rus&message=Русский&color=red)](https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/blob/master/ПРОЧТИ_МЕНЯ.md)
-[![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=ger&message=Deutsche&color=orange)](https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/blob/master/Deutsche.md)
+[![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=ger&message=Deutsche&color=orange)](https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/blob/master/LIESMICH.md)
 
 [![Android Studio Plugin](https://img.shields.io/badge/plugin-AndroidStudio-green.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
 [![IntelliJ Idea Plugin](https://img.shields.io/badge/plugin-IntelliJ%20%20Idea-blue.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
