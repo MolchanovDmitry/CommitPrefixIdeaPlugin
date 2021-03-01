@@ -20,6 +20,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
       
+      - name: Build
+        run: gradlew clean build
+      
       - uses: actions/download-artifact@v2
         with:
           name: my-artifact
@@ -27,7 +30,7 @@ jobs:
 
       # Runs a set of commands using the runners shell
       - name: Build plugin
-        run: gradlew clean buildPlugin
+        run: gradlew buildPlugin
         
       - name: Display structure of downloaded files
         run: ls -R
