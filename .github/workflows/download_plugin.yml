@@ -24,8 +24,19 @@ jobs:
         run: chmod +x ./gradlew
       
        # Runs a set of commands using the runners shell
-      - name: Build plugin
-        run: ./gradlew buildPlugin
+      #- name: Build plugin
+       # run: ./gradlew buildPlugin
+
+      - uses: actions/checkout@v2
+
+      - run: mkdir -p artifact
+
+      - run: echo hello > artifact/world.txt
+
+      - uses: actions/upload-artifact@v2
+        with:
+          name: my-artifact
+          path: artifact/world.txt
 
       - name: test ls
         run: ls -l
