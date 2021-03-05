@@ -26,6 +26,15 @@ jobs:
        # Runs a set of commands using the runners shell
       - name: Build plugin
         run: ./gradlew buildPlugin
+
+      - name: test ls
+        run: ls -l
+
+      - name: test ls 2
+        run: ls -l build
+
+      - name: test ls 3
+        run: ls -l build/libs
         
       - uses: actions/download-artifact@v2
         with:
