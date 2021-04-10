@@ -1,18 +1,18 @@
 package dmitriy.molchanov.domain
 
 import com.intellij.openapi.project.ProjectManager
-import git4idea.repo.GitRepositoryManager
 import dmitriy.molchanov.data.Repository
 import dmitriy.molchanov.model.Rule
 import dmitriy.molchanov.ui.add.AddRuleDialog
 import dmitriy.molchanov.ui.main.SettingsDialog
+import git4idea.repo.GitRepositoryManager
 
 
 class Presenter : SettingsDialog.OnSettingsDialogListener {
 
     private val repository = Repository.instance
     private val repositoryManagers = ProjectManager.getInstance().openProjects
-            .map(GitRepositoryManager::getInstance)
+        .map(GitRepositoryManager::getInstance)
     private lateinit var settingsDialog: SettingsDialog
 
     fun showMain() {
@@ -56,9 +56,9 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
         var currentBranchName: String? = null
         repositoryManagers.forEach { gitRepositoryManager ->
             gitRepositoryManager.repositories
-                    .firstOrNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl == url }
-                    ?.currentBranch
-                    ?.let { currentBranchName = it.name }
+                .firstOrNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl == url }
+                ?.currentBranch
+                ?.let { currentBranchName = it.name }
         }
         return currentBranchName
     }
@@ -73,8 +73,8 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
         val gitRepUrls = mutableListOf<String>()
         repositoryManagers.forEach { gitRepManager ->
             gitRepManager.repositories
-                    .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
-                    .forEach { url -> gitRepUrls.add(url) }
+                .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
+                .forEach { url -> gitRepUrls.add(url) }
         }
         return gitRepUrls
     }
