@@ -11,8 +11,7 @@ repositories {
 }
 
 dependencies {
-    implementation "org.jetbrains.kotlin:kotlin-stdlib"
-    //implementation "com.github.adedayo.intellij.sdk:git4idea:142.1"
+   implementation "org.jetbrains.kotlin:kotlin-stdlib"
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
