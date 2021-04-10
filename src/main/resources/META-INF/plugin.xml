@@ -17,6 +17,10 @@
     </description>
 
     <change-notes><![CDATA[
+        <b>1.3</b><br>
+        <ul>
+             <li>Migrate to gradle</li>
+        </ul>
         <b>1.2</b><br>
         <ul>
              <li>Improved usability</li>
