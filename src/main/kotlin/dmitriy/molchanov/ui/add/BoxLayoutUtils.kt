@@ -19,6 +19,6 @@ object BoxLayoutUtils {
 
     /** Создание панели с горизонтальным расположением */
     fun createHorizontalPanel() = JPanel().apply {
-        layout = BoxLayout(this, BoxLayout.X_AXIS)
+        layout = BoxLayout(this, BoxLayout.LINE_AXIS)
     }
 }
