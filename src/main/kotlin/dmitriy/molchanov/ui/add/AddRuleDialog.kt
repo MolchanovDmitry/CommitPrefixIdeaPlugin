@@ -30,7 +30,7 @@ class AddRuleDialog(
                 checkString = checkStringEdit.text,
                 startWith = startWithEdit.text,
                 endWith = endWithEdit.text,
-                register = registerBox.selectedItem?.toString() ?: Strings.REGISTER_NONE
+                isUpperCase = shouldRuleBuUpperCase()
             )
         }
 
@@ -57,11 +57,11 @@ class AddRuleDialog(
         addActionListener { updateCheckString() }
         editablePrefix?.gitRepo?.let(::setToolTipText)
     }
-    private val registerBox = ComboBox(Strings.registers).apply {
-        isEditable = true
-        selectedItem = editablePrefix?.register ?: Strings.REGISTER_NONE
-        addActionListener { updateDialogStatus() }
-    }
+    private val registerBox =
+        ComboBox(arrayOf(Strings.REGISTER_NONE, Strings.REGISTER_LOWER_CASE, Strings.REGISTER_UPPER_CASE)).apply {
+            selectedItem = editablePrefix?.isUpperCase?.registerString() ?: Strings.REGISTER_NONE
+            addActionListener { updateDialogStatus() }
+        }
 
     private val keyListener = object : KeyListener {
         override fun keyTyped(p0: KeyEvent?) {}
@@ -85,23 +85,24 @@ class AddRuleDialog(
         val getRepLabel = JLabel(Strings.GIT_REPO)
         val prefixLabel = JLabel(Strings.REGEX_PREFIX)
         val registerLabel = JLabel(Strings.REGISTER)
-        val messagePrefixLabel = JLabel(Strings.START_WITH)
-        val messageSuffixLabel = JLabel(Strings.END_WITH)
+        val startWithLabel = JLabel(Strings.START_WITH)
+        val endWithLabel = JLabel(Strings.END_WITH)
         val checkStringLabel = JLabel(Strings.CHECK_BRANCH)
 
         val gitRepGroup = getViewGroup(getRepLabel, gitRepBox)
         val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
         val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit)
 
-        val registerGroup = getViewGroup(registerLabel, registerBox)
-        val messagePrefixGroup = getViewGroup(messagePrefixLabel, startWithEdit)
-        val messageSuffixGroup = getViewGroup(messageSuffixLabel, endWithEdit)
+        val startWithGroup = getViewGroup(startWithLabel, startWithEdit)
+        val endWithGroup = getViewGroup(endWithLabel, endWithEdit)
         val statusGroup = getCheckText(statusLabel)
 
-        val messageGroup = getViewGroup(messagePrefixGroup, messageSuffixGroup)
+        val registerGroup = getViewGroup(registerLabel, registerBox)
+
+        val messageGroup = getViewGroup(startWithGroup, endWithGroup)
 
         // Определение размеров надписей к текстовым полям
-        GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel, checkStringLabel, registerLabel, messagePrefixLabel))
+        GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel, checkStringLabel, registerLabel, startWithLabel))
 
         root.add(gitRepGroup)
         root.add(prefixGroup)
@@ -186,15 +187,30 @@ class AddRuleDialog(
     private fun String.formatByParams(): String {
         val prefix = startWithEdit.text
         val suffix = endWithEdit.text
-
-        val isUpperCase = registerBox.selectedItem?.toString() == Strings.REGISTER_UPPER
-        val isLowerCase = registerBox.selectedItem?.toString() == Strings.REGISTER_LOWER
-        val core = when {
-            isUpperCase -> uppercase()
-            isLowerCase -> lowercase()
+        val registeredValue = when(shouldRuleBuUpperCase()){
+            true -> uppercase()
+            false -> lowercase()
             else -> this
         }
-        return "$prefix$core$suffix"
+        return "$prefix$registeredValue$suffix"
+    }
+
+    /**
+     * Возвращает показатель регистра для правила.
+     * @return true перевести в верхний регистр.
+     * @return false перевести в нижний регистр.
+     * @return null не переводить.
+     */
+    private fun shouldRuleBuUpperCase() = when (registerBox.selectedItem?.toString()) {
+        Strings.REGISTER_UPPER_CASE -> true
+        Strings.REGISTER_LOWER_CASE -> false
+        else -> null
+    }
+
+    private fun Boolean?.registerString() = when (this) {
+        true -> Strings.REGISTER_UPPER_CASE
+        false -> Strings.REGISTER_LOWER_CASE
+        else -> Strings.REGISTER_NONE
     }
 
     private class DialogStatus(val message: String, val shouldOkButtonActive: Boolean)

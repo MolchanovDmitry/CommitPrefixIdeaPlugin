@@ -25,11 +25,8 @@ object Strings {
     const val STAR_ON_GITHUB = "star on github."
     const val GITHUB_URL = "https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin"
     const val RESULT = "Result:"
-    const val COMMIT_MESSAGE = "some commit message.\n"
-
+    const val COMMIT_MESSAGE = "your commit message.\n"
     const val REGISTER_NONE = "None"
-    const val REGISTER_LOWER = "Lover case"
-    const val REGISTER_UPPER = "Upper case"
-
-    val registers by lazy(LazyThreadSafetyMode.NONE) { arrayOf(REGISTER_NONE, REGISTER_LOWER, REGISTER_UPPER) }
+    const val REGISTER_LOWER_CASE = "Lower case"
+    const val REGISTER_UPPER_CASE = "Upper case"
 }
