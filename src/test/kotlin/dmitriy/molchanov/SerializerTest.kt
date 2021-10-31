@@ -19,9 +19,23 @@ class SerializerTest {
     }
 
     @Test
-    fun serializeRule(){
-        val rule = Rule("11", "22", "33")
-        val rule2 = Rule("aa", "bb", "cc")
+    fun serializeRule() {
+        val rule = Rule(
+            gitRepo = "11",
+            regexPrefix = "22",
+            checkString = "33",
+            startWith = "[",
+            endWith = "]",
+            register = ""
+        )
+        val rule2 = Rule(
+            gitRepo = "aa",
+            regexPrefix = "bb",
+            checkString = "cc",
+            startWith = "[",
+            endWith = "]",
+            register = ""
+        )
         val list = arrayListOf(rule, rule2)
         val ser = Serializer.serialize(list)
         val des = Serializer.deserialize<ArrayList<String>>(ser!!) as ArrayList<Rule>

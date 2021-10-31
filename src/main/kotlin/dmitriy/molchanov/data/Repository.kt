@@ -21,12 +21,8 @@ class Repository : PersistentStateComponent<Repository> {
 
     fun removeRule(rule: Rule) {
         rules
-                .firstOrNull { it.gitRepo == rule.gitRepo }
-                ?.let(rules::remove)
-    }
-
-    fun removeRule(rules: List<Rule>) {
-        rules.forEach(::removeRule)
+            .firstOrNull { it.gitRepo == rule.gitRepo }
+            ?.let(rules::remove)
     }
 
     override fun getState(): Repository {
@@ -36,8 +32,8 @@ class Repository : PersistentStateComponent<Repository> {
 
     override fun loadState(stateLoadedFromPersistence: Repository) {
         stateLoadedFromPersistence.serializedRules
-                ?.let { Serializer.deserialize<Rule>(it) }
-                ?.let { rules = it }
+            ?.let { Serializer.deserialize<Rule>(it) }
+            ?.let { rules = it }
     }
 
     companion object {

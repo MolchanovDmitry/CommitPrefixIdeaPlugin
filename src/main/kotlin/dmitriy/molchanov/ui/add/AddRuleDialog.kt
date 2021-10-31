@@ -23,14 +23,29 @@ class AddRuleDialog(
 ) : DialogWrapper(true) {
 
     val rule: Rule?
-        get() = selectedGitRep?.let { Rule(it, prefixEdit.text, checkStringEdit.text) }
+        get() = selectedGitRep?.let {
+            Rule(
+                gitRepo = it,
+                regexPrefix = prefixEdit.text,
+                checkString = checkStringEdit.text,
+                startWith = startWithEdit.text,
+                endWith = endWithEdit.text,
+                register = registerBox.selectedItem?.toString() ?: Strings.REGISTER_NONE
+            )
+        }
 
     private val selectedGitRep: String?
         get() = gitRepBox.selectedItem?.toString()
-    private val prefixEdit = JTextField(TEXT_COLUMNS)
+    private val prefixEdit = JTextField(TEXT_COLUMNS).apply {
+        editablePrefix?.regexPrefix?.let(::setText)
+    }
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
-    private val startWithEdit = JTextField(TEXT_COLUMNS)
-    private val endWithEdit = JTextField(TEXT_COLUMNS)
+    private val startWithEdit = JTextField(TEXT_COLUMNS).apply {
+        editablePrefix?.startWith?.let(::setText)
+    }
+    private val endWithEdit = JTextField(TEXT_COLUMNS).apply {
+        editablePrefix?.endWith?.let(::setText)
+    }
     private val statusLabel = JLabel(Strings.FILL_FIELDS)
     private val resultTitle = JLabel(Strings.RESULT)
     private val resultTextField = JTextArea(Strings.COMMIT_MESSAGE).apply {
@@ -44,6 +59,7 @@ class AddRuleDialog(
     }
     private val registerBox = ComboBox(Strings.registers).apply {
         isEditable = true
+        selectedItem = editablePrefix?.register ?: Strings.REGISTER_NONE
         addActionListener { updateDialogStatus() }
     }
 
@@ -56,7 +72,6 @@ class AddRuleDialog(
     init {
         init()
         title = Strings.ADD_RULE
-        editablePrefix?.regexPrefix?.let(prefixEdit::setText)
         editablePrefix?.checkString
             ?.let(checkStringEdit::setText)
             ?: updateCheckString()

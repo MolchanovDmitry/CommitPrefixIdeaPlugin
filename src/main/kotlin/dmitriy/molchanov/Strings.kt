@@ -27,7 +27,7 @@ object Strings {
     const val RESULT = "Result:"
     const val COMMIT_MESSAGE = "some commit message.\n"
 
-    private const val REGISTER_NONE = "None"
+    const val REGISTER_NONE = "None"
     const val REGISTER_LOWER = "Lover case"
     const val REGISTER_UPPER = "Upper case"
 

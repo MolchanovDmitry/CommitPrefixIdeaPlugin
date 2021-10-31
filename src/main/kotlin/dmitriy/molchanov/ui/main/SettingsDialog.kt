@@ -56,13 +56,10 @@ class SettingsDialog(
         }
     }
 
-    fun getSelectedRules() = table.selectedRows
+    fun getSelectedReps() = table.selectedRows
         .map {
-            val repo = tableModel.getValueAt(it, REP_INDEX) as String
-            val regexPrefix = tableModel.getValueAt(it, REGEX_INDEX) as String
-            val checkString = tableModel.getValueAt(it, CHECK_INDEX) as String
-            Rule(repo, regexPrefix, checkString)
-        }.toList()
+            tableModel.getValueAt(it, REP_INDEX) as String
+        }
 
     override fun createCenterPanel(): JComponent {
         val root = JPanel(VerticalLayout())
@@ -137,7 +134,5 @@ class SettingsDialog(
     private companion object {
         const val ICON_SIZE = 25
         const val REP_INDEX = 0
-        const val REGEX_INDEX = 1
-        const val CHECK_INDEX = 2
     }
 }
