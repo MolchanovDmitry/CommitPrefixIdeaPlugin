@@ -11,8 +11,8 @@ object Strings {
     const val REGEX_PREFIX = "Regex prefix:"
     const val CHECK_BRANCH = "Check branch:"
     const val REGISTER = "Register:"
-    const val MESSAGE_PREFIX = "Message prefix:"
-    const val MESSAGE_SUFFIX = "Message suffix:"
+    const val START_WITH = "Start with:"
+    const val END_WITH = "End with:"
     const val GIT_REPO_WARNING = "Git repo is empty"
     const val REGEX_PREFIX_WARNING = "Regex prefix is empty"
     const val CHECK_BRANCH_WARNING = "Check string is empty"
@@ -24,10 +24,12 @@ object Strings {
     const val LIKE_THIS_PLUGIN = "Like this plugin? Please "
     const val STAR_ON_GITHUB = "star on github."
     const val GITHUB_URL = "https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin"
+    const val RESULT = "Result:"
+    const val COMMIT_MESSAGE = "some commit message.\n"
 
     private const val REGISTER_NONE = "None"
-    private const val REGISTER_LOWER = "Lover case"
-    private const val REGISTER_UPPER = "Upper case"
+    const val REGISTER_LOWER = "Lover case"
+    const val REGISTER_UPPER = "Upper case"
 
     val registers by lazy(LazyThreadSafetyMode.NONE) { arrayOf(REGISTER_NONE, REGISTER_LOWER, REGISTER_UPPER) }
 }

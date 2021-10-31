@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
 import javax.swing.*
 
+
 /**
  * Дилог сохранения/редактирования правила
  *
@@ -28,9 +29,13 @@ class AddRuleDialog(
         get() = gitRepBox.selectedItem?.toString()
     private val prefixEdit = JTextField(TEXT_COLUMNS)
     private val checkStringEdit = JTextField(TEXT_COLUMNS)
-    private val messagePrefixEdit = JTextField(TEXT_COLUMNS)
-    private val messageSuffixEdit = JTextField(TEXT_COLUMNS)
+    private val startWithEdit = JTextField(TEXT_COLUMNS)
+    private val endWithEdit = JTextField(TEXT_COLUMNS)
     private val statusLabel = JLabel(Strings.FILL_FIELDS)
+    private val resultTitle = JLabel(Strings.RESULT)
+    private val resultTextField = JTextArea(Strings.COMMIT_MESSAGE).apply {
+        addFocusListener(DisabledEditFocusListener(this))
+    }
 
     private val gitRepBox = ComboBox(gitRepUrls.toTypedArray()).apply {
         isEditable = true
@@ -61,22 +66,24 @@ class AddRuleDialog(
     override fun createCenterPanel(): JComponent {
         // Создание панели для размещение компонентов
         val root = BoxLayoutUtils.createVerticalPanel()
+
         val getRepLabel = JLabel(Strings.GIT_REPO)
         val prefixLabel = JLabel(Strings.REGEX_PREFIX)
         val registerLabel = JLabel(Strings.REGISTER)
-        val messagePrefixLabel = JLabel(Strings.MESSAGE_PREFIX)
-        val messageSuffixLabel = JLabel(Strings.MESSAGE_SUFFIX)
+        val messagePrefixLabel = JLabel(Strings.START_WITH)
+        val messageSuffixLabel = JLabel(Strings.END_WITH)
         val checkStringLabel = JLabel(Strings.CHECK_BRANCH)
 
         val gitRepGroup = getViewGroup(getRepLabel, gitRepBox)
-        val registerGroup = getViewGroup(registerLabel, registerBox)
         val prefixGroup = getViewGroup(prefixLabel, prefixEdit)
-        val messagePrefixGroup = getViewGroup(messagePrefixLabel, messagePrefixEdit)
-        val messageSuffixGroup = getViewGroup(messageSuffixLabel, messageSuffixEdit)
-        val statusGroup = getCheckText(statusLabel)
         val checkStringGroup = getViewGroup(checkStringLabel, checkStringEdit)
 
-        val messageGroup = getViewGroup(messagePrefixGroup,messageSuffixGroup)
+        val registerGroup = getViewGroup(registerLabel, registerBox)
+        val messagePrefixGroup = getViewGroup(messagePrefixLabel, startWithEdit)
+        val messageSuffixGroup = getViewGroup(messageSuffixLabel, endWithEdit)
+        val statusGroup = getCheckText(statusLabel)
+
+        val messageGroup = getViewGroup(messagePrefixGroup, messageSuffixGroup)
 
         // Определение размеров надписей к текстовым полям
         GuiUtils.makeSameSize(arrayOf(getRepLabel, prefixLabel, checkStringLabel, registerLabel, messagePrefixLabel))
@@ -87,6 +94,8 @@ class AddRuleDialog(
         root.add(registerGroup)
         root.add(messageGroup)
         root.add(statusGroup)
+        root.add(getCheckText(resultTitle))
+        root.add(resultTextField)
         return root
     }
 
@@ -98,9 +107,14 @@ class AddRuleDialog(
     }
 
     private fun updateDialogStatus() {
-        val dialogStatus = getDialogStatus()
+        val dialogStatusToPrefix = getDialogStatusToCorePrefix()
+        val dialogStatus = dialogStatusToPrefix.first
+        val prefix = dialogStatusToPrefix.second
+
         statusLabel.text = dialogStatus.message
         okAction.isEnabled = dialogStatus.shouldOkButtonActive
+
+        resultTextField.text = (prefix?.formatByParams() ?: "") + Strings.COMMIT_MESSAGE
     }
 
     /** Получить строку вида "текст _ поле для ввода" */
@@ -120,7 +134,7 @@ class AddRuleDialog(
     /**
      * Получить статус заполнения формы
      */
-    private fun getDialogStatus(): DialogStatus {
+    private fun getDialogStatusToCorePrefix(): Pair<DialogStatus, String?> {
         var message = Strings.EMPTY
         if (selectedGitRep.isNullOrEmpty()) message += "${Strings.GIT_REPO_WARNING}, "
         if (prefixEdit.text.isNullOrEmpty()) message += "${Strings.REGEX_PREFIX_WARNING}, "
@@ -130,7 +144,7 @@ class AddRuleDialog(
             return DialogStatus(
                 message = "<html><font color=red>$showedMessage</font></html>",
                 shouldOkButtonActive = false
-            )
+            ) to null
         }
         val regex = Regex(prefixEdit.text)
         val checkStr = checkStringEdit.text
@@ -141,17 +155,31 @@ class AddRuleDialog(
             val endText = checkStr.substring(lastMatch)
             return DialogStatus(
                 message = "<html>" +
-                        "<font color=black>$startText</font>" +
-                        "<font color=green>$matchText</font>" +
+                        "<font color=black>Match check: $startText</font>" +
+                        "<font color=green>${matchText}</font>" +
                         "<font color=black>$endText</font>" +
                         "</html>",
                 shouldOkButtonActive = true
-            )
+            ) to matchText
         }
         return DialogStatus(
             message = "<html><font color=red>${Strings.NO_MATCHES_FOUND}</font></html>",
             shouldOkButtonActive = false
-        )
+        ) to null
+    }
+
+    private fun String.formatByParams(): String {
+        val prefix = startWithEdit.text
+        val suffix = endWithEdit.text
+
+        val isUpperCase = registerBox.selectedItem?.toString() == Strings.REGISTER_UPPER
+        val isLowerCase = registerBox.selectedItem?.toString() == Strings.REGISTER_LOWER
+        val core = when {
+            isUpperCase -> uppercase()
+            isLowerCase -> lowercase()
+            else -> this
+        }
+        return "$prefix$core$suffix"
     }
 
     private class DialogStatus(val message: String, val shouldOkButtonActive: Boolean)
