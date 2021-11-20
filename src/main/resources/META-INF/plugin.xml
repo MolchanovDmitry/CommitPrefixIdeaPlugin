@@ -17,9 +17,11 @@
     </description>
 
     <change-notes><![CDATA[
-        <b>1.3</b><br>
+
+        <b>1.4</b><br>
         <ul>
-             <li>Migrate to gradle</li>
+             <li>Added the ability to add additional text around the result regex value.</li>
+             <li>Added the ability change text register.</li>
         </ul>
         <b>1.2</b><br>
         <ul>

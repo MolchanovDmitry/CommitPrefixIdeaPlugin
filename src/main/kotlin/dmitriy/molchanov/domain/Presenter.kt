@@ -13,12 +13,13 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
     private val repository = Repository.instance
     private val repositoryManagers = ProjectManager.getInstance().openProjects
         .map(GitRepositoryManager::getInstance)
-    private lateinit var settingsDialog: SettingsDialog
+    private val settingsDialog by lazy {
+        SettingsDialog(this).apply {
+            addRules(repository.getRules())
+        }
+    }
 
     fun showMain() {
-        val rules = repository.getRules()
-        settingsDialog = SettingsDialog(this)
-        settingsDialog.addRules(rules)
         settingsDialog.show()
     }
 
@@ -30,13 +31,16 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
     }
 
     override fun onRemoveClick() {
-        val rules = settingsDialog.getSelectedRules()
-        repository.removeRule(rules)
+        val selectedReps = settingsDialog.getSelectedReps()
+        repository.getRules()
+            .filter { rule -> selectedReps.contains(rule.gitRepo) }
+            .forEach(repository::removeRule)
         updateSettingsDialogTable()
     }
 
     override fun onEditClick() {
-        val rule = settingsDialog.getSelectedRules().firstOrNull() ?: return
+        val selectedRep = settingsDialog.getSelectedReps().firstOrNull() ?: return
+        val rule = repository.getRules().firstOrNull { it.gitRepo == selectedRep } ?: return
         showAddRuleDialog(rule) { newRule ->
             repository.removeRule(rule)
             repository.addRule(newRule)
@@ -74,7 +78,7 @@ class Presenter : SettingsDialog.OnSettingsDialogListener {
         repositoryManagers.forEach { gitRepManager ->
             gitRepManager.repositories
                 .mapNotNull { gitRep -> gitRep.info.remotes.firstOrNull()?.firstUrl }
-                .forEach { url -> gitRepUrls.add(url) }
+                .forEach(gitRepUrls::add)
         }
         return gitRepUrls
     }

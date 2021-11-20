@@ -4,6 +4,7 @@ import com.intellij.openapi.project.Project
 import com.intellij.openapi.vcs.changes.LocalChangeList
 import com.intellij.openapi.vcs.changes.ui.CommitMessageProvider
 import dmitriy.molchanov.data.Repository
+import dmitriy.molchanov.model.Rule
 import git4idea.repo.GitRepository
 import git4idea.repo.GitRepositoryManager
 
@@ -14,14 +15,23 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
         val gitRepositoryManager = GitRepositoryManager.getInstance(project)
         val currentRepository = gitRepositoryManager.repositories.firstOrNull()
         val branchName = currentRepository?.currentBranch?.name ?: return lastComment
-        val regex = getRegexForRepository(currentRepository) ?: return lastComment
+        val rule = getRuleForRepository(currentRepository)
+        val regex = rule?.regexPrefix?.let(::Regex) ?: return lastComment
         val match = regex.find(branchName)
         return match?.value
-            ?.let { taskPrefix -> getConcatenatedMessage(lastComment, taskPrefix, regex) }
+            ?.let { taskPrefix ->
+                getConcatenatedMessage(
+                    lastComment = lastComment,
+                    taskPrefix = taskPrefix,
+                    startWith = rule.startWith,
+                    endWith = rule.endWith,
+                    isUpperCase = rule.isUpperCase
+                )
+            }
             ?: lastComment
     }
 
-    private fun getRegexForRepository(repository: GitRepository): Regex? {
+    private fun getRuleForRepository(repository: GitRepository): Rule? {
         val remoteUrl = repository
             .info.remotes.firstOrNull()
             ?.firstUrl
@@ -29,15 +39,24 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
         return Repository.instance
             .getRules()
             .firstOrNull { it.gitRepo.trim() == remoteUrl.trim() }
-            ?.regexPrefix
-            ?.let(::Regex)
     }
 
-    private fun getConcatenatedMessage(lastComment: String?, taskPrefix: String, regex: Regex): String {
-        if (lastComment.isNullOrEmpty()) return "$taskPrefix "
-        val currentPrefix = regex.find(lastComment)?.value
-        return currentPrefix
-            ?.let { lastComment.replace(currentPrefix, taskPrefix) }
-            ?: "$taskPrefix $lastComment"
+    private fun getConcatenatedMessage(
+        lastComment: String?,
+        taskPrefix: String,
+        startWith: String,
+        endWith: String,
+        isUpperCase: Boolean?
+    ): String {
+        val registeredPrefix = when (isUpperCase) {
+            false -> taskPrefix.lowercase()
+            true -> taskPrefix.uppercase()
+            else -> taskPrefix
+        }
+        val fullPrefix = "$startWith$registeredPrefix$endWith"
+        return when {
+            lastComment?.contains(fullPrefix) == true -> lastComment
+            else -> fullPrefix
+        }
     }
 }
