@@ -1,10 +1,11 @@
 package dmitriy.molchanov.data
 
+import com.intellij.openapi.application.ApplicationManager
 import com.intellij.openapi.components.PersistentStateComponent
-import com.intellij.openapi.components.ServiceManager
 import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import dmitriy.molchanov.model.Rule
+
 
 @State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
 class Repository : PersistentStateComponent<Repository> {
@@ -39,6 +40,6 @@ class Repository : PersistentStateComponent<Repository> {
     companion object {
         var rules: ArrayList<Rule> = ArrayList()
         val instance: Repository
-            get() = ServiceManager.getService(Repository::class.java)
+            get() = ApplicationManager.getApplication().getService(Repository::class.java)
     }
 }
