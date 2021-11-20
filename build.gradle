@@ -17,28 +17,28 @@ java {
 }
 
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.5.31'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/
 intellij {
     version '2020.3.2'
     plugins = ['Git4Idea']
-    /*
-    version '2021.2'
-    plugins = ['git4idea']
-     */
 }
 patchPluginXml {
     changeNotes """
-      Add change notes here.<br>
-      <em>most HTML tags may be used</em>"""
+        <b>1.4</b><br>
+        <ul>
+            <li>Added the ability to add additional text around the result regex value.</li>
+            <li>Added the ability change text register.</li>
+        </ul>
+    """
 }
 test {
     useJUnitPlatform()
 }
 
-runPluginVerifier{
+runPluginVerifier {
     ideVersions = ["IC-2021.2"]
 }
 
