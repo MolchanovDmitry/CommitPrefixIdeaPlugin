@@ -162,9 +162,9 @@ class AddRuleDialog(
                 shouldOkButtonActive = false
             ) to null
         }
-        val regex = Regex(prefixEdit.text)
+        val regex = prefixEdit.text.getRegexOrNull()
         val checkStr = checkStringEdit.text
-        regex.find(checkStr)?.range?.apply {
+        regex?.find(checkStr)?.range?.apply {
             val lastMatch = if (last == checkStr.length) last else last + 1
             val startText = checkStr.substring(0, first)
             val matchText = checkStr.substring(first, lastMatch)
@@ -187,7 +187,7 @@ class AddRuleDialog(
     private fun String.formatByParams(): String {
         val prefix = startWithEdit.text
         val suffix = endWithEdit.text
-        val registeredValue = when(shouldRuleBuUpperCase()){
+        val registeredValue = when (shouldRuleBuUpperCase()) {
             true -> uppercase()
             false -> lowercase()
             else -> this
@@ -212,6 +212,13 @@ class AddRuleDialog(
         false -> Strings.REGISTER_LOWER_CASE
         else -> Strings.REGISTER_NONE
     }
+
+    private fun String.getRegexOrNull(): Regex? =
+        try {
+            Regex(this)
+        } catch (throwable: Throwable) {
+            null
+        }
 
     private class DialogStatus(val message: String, val shouldOkButtonActive: Boolean)
 
