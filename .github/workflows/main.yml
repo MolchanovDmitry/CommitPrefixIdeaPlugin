@@ -6,9 +6,9 @@ name: CI
 on:
   # Triggers the workflow on push or pull request events but only for the master branch
   push:
-    branches: [ master ]
+    branches: [ action_fix ]
   pull_request:
-    branches: [ master ]
+    branches: [ action_fix ]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -30,6 +30,11 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Run a one-line script
-        run: ./gradlew build
+        run: ./gradlew jar
 
-          echo test, and deploy your project.
+      - name: deploy plugin
+        uses: actions/upload-artifact@v3
+        with:
+          name: plugin-jar
+          path: build/libs/*
+          retention-days: 7
