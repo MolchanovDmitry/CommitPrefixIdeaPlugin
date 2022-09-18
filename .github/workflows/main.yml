@@ -37,5 +37,5 @@ jobs:
         run: ls -l build/libs
         with:
           name: plugin-jar
-          path: build/libs/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar
+          path: build\/libs\/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar
           retention-days: 1
