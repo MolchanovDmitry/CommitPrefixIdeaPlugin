@@ -39,5 +39,5 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: plugin-jar
-          path: build\/libs\/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar
+          path: build/libs/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar$
           retention-days: 1
