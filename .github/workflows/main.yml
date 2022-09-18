@@ -32,9 +32,11 @@ jobs:
       - name: Run a one-line script
         run: ./gradlew jar
 
+      - name: Check file exists
+        run: ls -l build/libs
+
       - name: deploy plugin
         uses: actions/upload-artifact@v3
-        run: ls -l build/libs
         with:
           name: plugin-jar
           path: build\/libs\/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar
