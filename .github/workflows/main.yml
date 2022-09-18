@@ -34,6 +34,7 @@ jobs:
 
       - name: deploy plugin
         uses: actions/upload-artifact@v3
+        run: ls -l build/libs
         with:
           name: plugin-jar
           path: build/libs/CommitPrefixIdeaPlugin-\d.\d(.\d){0,1}.jar
