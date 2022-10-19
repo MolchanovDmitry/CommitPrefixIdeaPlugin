@@ -1,12 +1,13 @@
 name: Test
 
 on:
-  push:
+  workflow_run:
+    workflows: [ Lint ]
     branches: [ update ]
-  pull_request:
-    branches: [ update ]
+    types: [ completed ]
 
   workflow_dispatch:
+    input: {}
 
 jobs:
   test:
