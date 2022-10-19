@@ -53,6 +53,5 @@ class SerializerTest {
         assertEquals(rule2.endWith, des[1].endWith)
         assertEquals(rule2.isUpperCase, des[1].isUpperCase)
         assertEquals(rule.startWith, des[1].startWith)
-
     }
 }

@@ -1,7 +1,8 @@
 plugins {
     id 'java'
     id 'org.jetbrains.intellij' version '0.7.2'
-    id 'org.jetbrains.kotlin.jvm' version '1.5.31'
+    id 'org.jetbrains.kotlin.jvm' version '1.7.20'
+    id "org.jlleitschuh.gradle.ktlint" version "11.0.0"
 }
 
 group 'dmitriy.molchanov'
@@ -15,8 +16,19 @@ java {
     sourceCompatibility = JavaVersion.VERSION_11
 }
 
+ktlint {
+    ignoreFailures = false
+    reporters {
+        reporter "plain"
+        reporter "checkstyle"
+        reporter "sarif"
+    }
+}
+
 dependencies {
-    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.6.0'
+    implementation 'org.jetbrains.kotlin:kotlin-stdlib:1.7.20'
+    testImplementation "junit:junit:4.13.2"
+    testRuntimeOnly 'org.junit.vintage:junit-vintage-engine:5.9.0'
 }
 
 // See https://github.com/JetBrains/gradle-intellij-plugin/

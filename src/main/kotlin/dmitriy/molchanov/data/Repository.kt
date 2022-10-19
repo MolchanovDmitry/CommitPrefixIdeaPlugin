@@ -6,7 +6,6 @@ import com.intellij.openapi.components.State
 import com.intellij.openapi.components.Storage
 import dmitriy.molchanov.model.Rule
 
-
 @State(name = "RuleServiceData", storages = [Storage("ruleServiceData.xml")])
 class Repository : PersistentStateComponent<Repository> {
 

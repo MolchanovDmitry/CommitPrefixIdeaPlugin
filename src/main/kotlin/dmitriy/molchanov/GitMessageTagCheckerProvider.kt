@@ -46,7 +46,7 @@ class GitMessageTagCheckerProvider : CommitMessageProvider {
         taskPrefix: String,
         startWith: String,
         endWith: String,
-        isUpperCase: Boolean?
+        isUpperCase: Boolean?,
     ): String {
         val registeredPrefix = when (isUpperCase) {
             false -> taskPrefix.lowercase()

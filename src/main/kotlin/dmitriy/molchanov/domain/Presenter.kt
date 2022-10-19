@@ -7,7 +7,6 @@ import dmitriy.molchanov.ui.add.AddRuleDialog
 import dmitriy.molchanov.ui.main.SettingsDialog
 import git4idea.repo.GitRepositoryManager
 
-
 class Presenter : SettingsDialog.OnSettingsDialogListener {
 
     private val repository = Repository.instance

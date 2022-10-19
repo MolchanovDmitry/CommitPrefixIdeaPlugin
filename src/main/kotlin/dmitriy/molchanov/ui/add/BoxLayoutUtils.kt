@@ -9,7 +9,7 @@ object BoxLayoutUtils {
 
     /** Выравнивание компонентов по оси X для группы компонентов */
     fun setGroupAlignmentX(components: Array<JComponent>, alignment: Float) =
-            components.forEach { it.alignmentX = alignment }
+        components.forEach { it.alignmentX = alignment }
 
     /** Создание панели с вертикальным расположением */
     fun createVerticalPanel() = JPanel().apply {

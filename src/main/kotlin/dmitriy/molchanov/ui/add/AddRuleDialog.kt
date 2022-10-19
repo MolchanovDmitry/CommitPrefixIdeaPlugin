@@ -6,8 +6,12 @@ import dmitriy.molchanov.Strings
 import dmitriy.molchanov.model.Rule
 import java.awt.event.KeyEvent
 import java.awt.event.KeyListener
-import javax.swing.*
-
+import javax.swing.Box
+import javax.swing.JComponent
+import javax.swing.JLabel
+import javax.swing.JPanel
+import javax.swing.JTextArea
+import javax.swing.JTextField
 
 /**
  * Дилог сохранения/редактирования правила
@@ -19,7 +23,7 @@ import javax.swing.*
 class AddRuleDialog(
     editablePrefix: Rule? = null,
     gitRepUrls: List<String>,
-    private val getCurBranchByUrl: (String) -> String?
+    private val getCurBranchByUrl: (String) -> String?,
 ) : DialogWrapper(true) {
 
     val rule: Rule?
@@ -171,10 +175,10 @@ class AddRuleDialog(
             val endText = checkStr.substring(lastMatch)
             return DialogStatus(
                 message = "<html>" +
-                        "<font color=black>Match check: $startText</font>" +
-                        "<font color=green>${matchText}</font>" +
-                        "<font color=black>$endText</font>" +
-                        "</html>",
+                    "<font color=black>Match check: $startText</font>" +
+                    "<font color=green>$matchText</font>" +
+                    "<font color=black>$endText</font>" +
+                    "</html>",
                 shouldOkButtonActive = true
             ) to matchText
         }

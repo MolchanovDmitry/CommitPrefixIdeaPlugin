@@ -1,10 +1,14 @@
 package dmitriy.molchanov.data
 
 import org.apache.commons.codec.binary.Base64
-import java.io.*
+import java.io.ByteArrayInputStream
+import java.io.ByteArrayOutputStream
+import java.io.IOException
+import java.io.ObjectInputStream
+import java.io.ObjectOutputStream
 
 object Serializer {
-    fun <T>serialize(dataList: ArrayList<T>): String? = try {
+    fun <T> serialize(dataList: ArrayList<T>): String? = try {
         ByteArrayOutputStream().use { bo ->
             ObjectOutputStream(bo).use { so ->
                 so.writeObject(dataList)
