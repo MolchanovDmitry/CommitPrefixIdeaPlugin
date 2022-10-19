@@ -10,14 +10,14 @@
     <img src="https://img.shields.io/badge/plugin-PyCharm-yellow.svg">
   </a>
 <br>
-  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/lint.yml" target="_blank">
-    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/lint.yml/badge.svg">
+  <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/lint.yml" target="_blank">
+    <img src="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/lint.yml/badge.svg">
   </a>
-  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/test.yml" target="_blank">
-    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/test.yml/badge.svg">
+  <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/test.yml" target="_blank">
+    <img src="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/test.yml/badge.svg">
   </a>
-  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/build.yml">
-    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/build.yml/badge.svg">
+  <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/build.yml">
+    <img src="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/build.yml/badge.svg">
   </a>
 </p>
 
@@ -37,3 +37,19 @@ Helps you to insert the task number from current branch to the beginning of the 
 ## Usage sample
    
 ![](https://plugins.jetbrains.com/files/16109/screenshot_0845b70e-e515-477b-9ab9-d01e7a387ecf)
+
+## License
+```
+Copyright 2020-2022 Dmitry Molchanov
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+  http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
