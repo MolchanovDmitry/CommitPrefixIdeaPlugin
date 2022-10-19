@@ -1,0 +1,19 @@
+name: Lint
+
+on:
+  push:
+    branches: [ update ]
+  pull_request:
+    branches: [ update ]
+
+  workflow_dispatch:
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Run unit test
+        run: ./gradlew ktlintCheck

@@ -1,11 +1,26 @@
-[![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=rus&message=Русский&color=red)](https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/blob/master/ПРОЧТИ_МЕНЯ.md)
-[![Android Studio Plugin](https://img.shields.io/static/v1.svg?label=ger&message=Deutsche&color=orange)](https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/blob/master/LIESMICH.md)
+<h1 align="center">Commit prefix plugin</h1> 
+<p align="center">
+  <a href="https://plugins.jetbrains.com/plugin/16109-commitprefix">
+    <img src="https://img.shields.io/badge/plugin-AndroidStudio-green.svg">
+  </a>
+  <a href="https://plugins.jetbrains.com/plugin/16109-commitprefix">
+    <img src="https://img.shields.io/badge/plugin-IntelliJ%20%20Idea-blue.svg">
+  </a>
+  <a href="https://plugins.jetbrains.com/plugin/16109-commitprefix">
+    <img src="https://img.shields.io/badge/plugin-PyCharm-yellow.svg">
+  </a>
+<br>
+  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/lint.yml" target="_blank">
+    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/lint.yml/badge.svg">
+  </a>
+  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/test.yml" target="_blank">
+    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/test.yml/badge.svg">
+  </a>
+  <a href="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/build.yml">
+    <img src="https://github.com/MolchanovDmitry/TicTacToeWearOs/actions/workflows/build.yml/badge.svg">
+  </a>
+</p>
 
-[![Android Studio Plugin](https://img.shields.io/badge/plugin-AndroidStudio-green.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
-[![IntelliJ Idea Plugin](https://img.shields.io/badge/plugin-IntelliJ%20%20Idea-blue.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
-[![Android Studio Plugin](https://img.shields.io/badge/plugin-PyCharm-yellow.svg)](https://plugins.jetbrains.com/plugin/16109-commitprefix)
-
-# Commit prefix plugin 
 Helps you to insert the task number from current branch to the beginning of the commit message.
 
 ## Instruction
