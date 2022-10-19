@@ -3,7 +3,7 @@ name: Test
 on:
   workflow_run:
     workflows: [ Lint ]
-    branches: [ update ]
+    branches: [ master ]
     types: [ completed ]
 
   workflow_dispatch:

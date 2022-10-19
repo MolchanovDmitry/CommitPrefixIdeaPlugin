@@ -2,9 +2,9 @@ name: Lint
 
 on:
   push:
-    branches: [ update ]
+    branches: [ master ]
   pull_request:
-    branches: [ update ]
+    branches: [ master ]
 
   workflow_dispatch:
 
