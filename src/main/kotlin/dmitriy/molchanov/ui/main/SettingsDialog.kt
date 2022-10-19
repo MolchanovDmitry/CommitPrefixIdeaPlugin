@@ -24,10 +24,8 @@ import javax.swing.JLabel
 import javax.swing.JPanel
 import javax.swing.table.DefaultTableModel
 
-
 class SettingsDialog(
-    private val listener: OnSettingsDialogListener
-
+    private val listener: OnSettingsDialogListener,
 ) : DialogWrapper(true) {
 
     private val tableModel: DefaultTableModel

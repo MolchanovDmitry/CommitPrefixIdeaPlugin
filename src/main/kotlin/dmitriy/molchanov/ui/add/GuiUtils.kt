@@ -2,7 +2,6 @@ package dmitriy.molchanov.ui.add
 
 import javax.swing.JComponent
 
-
 object GuiUtils {
 
     /**
@@ -13,9 +12,7 @@ object GuiUtils {
      */
     fun makeSameSize(components: Array<JComponent>) {
         // Массив компонентов
-        val array = components
-                .map { it.preferredSize.width }
-                .toIntArray()
+        val array = components.map { it.preferredSize.width }.toIntArray()
         // Получение максимального размера
         val maxSizePos = maximumElementPosition(array)
         val maxSize = components[maxSizePos].preferredSize

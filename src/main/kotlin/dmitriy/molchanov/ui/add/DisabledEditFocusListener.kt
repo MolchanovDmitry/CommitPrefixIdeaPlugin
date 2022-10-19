@@ -8,7 +8,7 @@ import javax.swing.JTextArea
 /**
  * Слушатель фокуса, не позволяющий редактировать [JTextArea]
  */
-class DisabledEditFocusListener(textArea: JTextArea): FocusListener {
+class DisabledEditFocusListener(textArea: JTextArea) : FocusListener {
 
     private val weakTextArea = WeakReference(textArea)
 

@@ -22,7 +22,7 @@ class Rule : Serializable {
     var endWith: String
     var isUpperCase: Boolean?
 
-    @Suppress("unused") //serialization fix
+    @Suppress("unused") // serialization fix
     constructor() {
         gitRepo = Strings.EMPTY
         regexPrefix = Strings.EMPTY
@@ -38,13 +38,13 @@ class Rule : Serializable {
         checkString: String,
         startWith: String,
         endWith: String,
-        isUpperCase: Boolean?
+        isUpperCase: Boolean?,
     ) {
         this.gitRepo = gitRepo
         this.regexPrefix = regexPrefix
         this.checkString = checkString
         this.startWith = startWith
         this.endWith = endWith
-        this.isUpperCase  = isUpperCase
+        this.isUpperCase = isUpperCase
     }
 }
