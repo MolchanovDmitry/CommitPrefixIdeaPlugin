@@ -1,10 +1,10 @@
 name: Test
 
 on:
-  push:
-    branches: [ update ]
-  pull_request:
-    branches: [ update ]
+  workflow_run:
+    workflows: [ Test ]
+    branches: ["update"]
+    types: [ completed ]
 
   workflow_dispatch:
 
