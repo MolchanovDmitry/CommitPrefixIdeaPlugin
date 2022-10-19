@@ -1,10 +1,10 @@
 name: Build
 
 on:
-  workflow_run:
-    workflows: [ Test ]
+  push:
     branches: [ update ]
-    types: [ completed ]
+  pull_request:
+    branches: [ update ]
 
   workflow_dispatch:
 
