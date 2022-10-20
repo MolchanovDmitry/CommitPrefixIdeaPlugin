@@ -9,6 +9,9 @@
   <a href="https://plugins.jetbrains.com/plugin/16109-commitprefix">
     <img src="https://img.shields.io/badge/plugin-PyCharm-yellow.svg">
   </a>
+  <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/build.yml">
+    <img src="https://img.shields.io/jetbrains/plugin/d/16109-commitprefix">
+  </a>
 <br>
   <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/lint.yml" target="_blank">
     <img src="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/lint.yml/badge.svg">
@@ -19,9 +22,14 @@
   <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/build.yml">
     <img src="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/actions/workflows/build.yml/badge.svg">
   </a>
+  <a href="https://github.com/MolchanovDmitry/CommitPrefixIdeaPlugin/releases">
+    <img src="https://img.shields.io/github/v/release/MolchanovDmitry/CommitPrefixIdeaPlugin?include_prereleases">
+  </a>
 </p>
 
+<p align="center">
 Helps you to insert the task number from current branch to the beginning of the commit message.
+</p>
 
 ## Instruction
 1. Wait project indexing.
