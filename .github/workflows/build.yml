@@ -18,6 +18,9 @@ jobs:
       - name: Assemble plugin
         run: ./gradlew jar
 
+      - name: Change wrapper permission
+        run: chmod +x ./gradlew
+
       - name: deploy plugin
         uses: actions/upload-artifact@v3
         with:
