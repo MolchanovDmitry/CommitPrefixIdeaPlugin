@@ -15,11 +15,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Assemble plugin
-        run: ./gradlew jar
-
       - name: Change wrapper permission
         run: chmod +x ./gradlew
+
+      - name: Assemble plugin
+        run: ./gradlew jar
 
       - name: deploy plugin
         uses: actions/upload-artifact@v3
